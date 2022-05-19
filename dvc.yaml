@@ -1,0 +1,26 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - assets/data/raw
+    - src/prepare.py
+    outs:
+    - assets/data/processed/test.tsv
+    - assets/data/processed/train.tsv
+    - assets/data/processed/validation.tsv
+  train:
+    cmd: python src/train.py
+    deps:
+    - assets/data/processed
+    - src/train.py
+    outs:
+    - assets/model/model.joblib
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - assets/data/processed
+    - assets/model/model.joblib
+    - src/evaluate.py
+    metrics:
+    - assets/metrics.json:
+        cache: false

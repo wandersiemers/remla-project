@@ -1,0 +1,1 @@
+open('assets/model/model.joblib', 'a').close()
