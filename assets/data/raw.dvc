@@ -2,4 +2,4 @@ outs:
 - md5: 3d9e62a9c241fcfcf634384a95dd4cf4.dir
   size: 10408878
   nfiles: 4
-  path: data
+  path: raw
