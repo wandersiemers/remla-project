@@ -23,9 +23,13 @@ jobs:
       with:
         python-version: 3.9.12
 
-    - name: Install Dependencies
+    - name: Install mllint
       run: |
         pip install mllint[tools]
+  
+    - name: Install dependencies so the linter detects them
+      run: |
+        pip install -r requirements.txt
         
     - name: Lint using mllint
       run: |
