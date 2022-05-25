@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Editors
+.vscode
+.idea
+
 # C extensions
 *.so
 
@@ -129,4 +133,3 @@ dmypy.json
 .pyre/
 
 .DS_STORE
-.idea/
