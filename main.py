@@ -4,9 +4,9 @@ from src.model import preprocessing, corpus_counts, bag_of_words, tf_idf, mlb, e
 
 def main():
 
-	train = preprocessing.read_data('./data/train.tsv')
-	validation = preprocessing.read_data('data/validation.tsv')
-	test = pd.read_csv('data/test.tsv', sep='\t')
+	train = preprocessing.read_data('assets/data/raw/train.tsv')
+	validation = preprocessing.read_data('assets/data/raw/validation.tsv')
+	test = pd.read_csv('assets/data/raw/test.tsv', sep='\t')
 
 	X_train, y_train = train['title'].values, train['tags'].values
 	X_val, y_val = validation['title'].values, validation['tags'].values

@@ -5,7 +5,7 @@ from scipy import sparse as sp_sparse
 def initialize(words_counts, X_train, X_val, X_test):
     DICT_SIZE = 5000
     INDEX_TO_WORDS = sorted(words_counts, key=words_counts.get, reverse=True)[
-        :DICT_SIZE]
+                     :DICT_SIZE]
     WORDS_TO_INDEX = {word: i for i, word in enumerate(INDEX_TO_WORDS)}
 
     X_train_mybag = sp_sparse.vstack([sp_sparse.csr_matrix(

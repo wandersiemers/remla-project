@@ -1,5 +1,4 @@
 def get_corpus_counts(X_train, y_train):
-
     tags_counts = {}
     words_counts = {}
 

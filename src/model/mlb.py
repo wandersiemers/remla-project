@@ -2,6 +2,7 @@ from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.linear_model import LogisticRegression
 
+
 def get_mlb(tags_counts, y_train, y_val):
     mlb = MultiLabelBinarizer(classes=sorted(tags_counts.keys()))
     y_train = mlb.fit_transform(y_train)
