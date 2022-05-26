@@ -1,5 +1,6 @@
-import pandas as pd
+# pylint: disable=too-many-locals
 from typing import Dict
+import pandas as pd
 from joblib import dump
 from model import (
     bag_of_words,
@@ -58,8 +59,6 @@ def main():
     dump(tfidf_reversed_vocab, 'assets/outputs/tf_idf_reversed_vocab.joblib')
     dump(classifier_tfidf, 'assets/models/classifier_tfidf.joblib')
     dump(mlb_classifier, 'assets/models/mlb_classifier.joblib')
-
-    pass
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 from typing import Dict
+import json
 
 import numpy as np
-import json
 
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
@@ -27,7 +27,7 @@ def save_evaluation_scores(y_val: np.ndarray, predicted: np.ndarray, algorithm: 
         'F1 score': f1_score(y_val, predicted, average='weighted'),
         'Average precision score': average_precision_score(y_val, predicted, average='macro')
     }
-    with open(f'assets/metrics/{algorithm}_metrics.json', 'w') as f:
+    with open(f'assets/metrics/{algorithm}_metrics.json', 'w', encoding='utf-8') as f:
         json.dump(res, f)
 
 
