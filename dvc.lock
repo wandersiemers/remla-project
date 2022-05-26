@@ -1,53 +1,22 @@
 schema: '2.0'
 stages:
   prepare:
-    cmd: python src/prepare.py
+    cmd: python src/preprocessing.py
     deps:
     - path: assets/data/raw
       md5: 3d9e62a9c241fcfcf634384a95dd4cf4.dir
       size: 10408878
       nfiles: 4
-    - path: src/prepare.py
-      md5: 89515316868544da3d1c7829de4599cb
-      size: 311
+    - path: src/preprocessing.py
+      md5: a7f2ccb6c0480eca4d09fc52457ed80c
+      size: 1708
     outs:
     - path: assets/data/processed/test.tsv
-      md5: 9aeea8a5208e0e9e15046a9779d2c064
-      size: 1172357
+      md5: 553c3b24f961fee94c977f43afc1b2b3
+      size: 844664
     - path: assets/data/processed/train.tsv
-      md5: 8df09dda4e2d0ba2dfa44f985a4d5aa3
-      size: 8024214
+      md5: 1af83773d2ea847814e40755915d13db
+      size: 6210450
     - path: assets/data/processed/validation.tsv
-      md5: 1ce27ce770d94c3385b7bbadc5dc0deb
-      size: 2407148
-  train:
-    cmd: python src/train.py
-    deps:
-    - path: assets/data/processed
-      md5: 6af8520b1b0d974ef388e79c03c8b900.dir
-      size: 11603759
-      nfiles: 4
-    - path: src/train.py
-      md5: 22b69cf646a3649ed7e3ebf182ac3e06
-      size: 46
-    outs:
-    - path: assets/model/model.joblib
-      md5: d41d8cd98f00b204e9800998ecf8427e
-      size: 0
-  evaluate:
-    cmd: python src/evaluate.py
-    deps:
-    - path: assets/data/processed
-      md5: 6af8520b1b0d974ef388e79c03c8b900.dir
-      size: 11603759
-      nfiles: 4
-    - path: assets/model/model.joblib
-      md5: d41d8cd98f00b204e9800998ecf8427e
-      size: 0
-    - path: src/evaluate.py
-      md5: faf49e1cd3f83d761c2ddd97097e60be
-      size: 113
-    outs:
-    - path: assets/metrics.json
-      md5: d8556de1ab9a67ba29638420936ab7e1
-      size: 17
+      md5: fa4dec3a691e4f8d85e3c10804eb8f26
+      size: 1869916

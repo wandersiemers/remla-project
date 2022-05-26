@@ -1,6 +1,8 @@
 import pandas as pd
 
-from src.model import preprocessing, corpus_counts, bag_of_words, tf_idf, mlb, evaluation
+from src.model import corpus_counts, bag_of_words, tf_idf, mlb
+from src import preprocessing, evaluate
+
 
 def main():
 
@@ -35,13 +37,13 @@ def main():
 	y_val_predicted_labels_tfidf = classifier_tfidf.predict(X_val_tfidf)
 
 	print('Bag-of-words')
-	evaluation.print_evaluation_scores(y_val, y_val_predicted_labels_mybag)
+	evaluate.print_evaluation_scores(y_val, y_val_predicted_labels_mybag)
 	print('Tfidf')
-	evaluation.print_evaluation_scores(y_val, y_val_predicted_labels_tfidf)
+	evaluate.print_evaluation_scores(y_val, y_val_predicted_labels_tfidf)
 
-	evaluation.print_words_for_tag(classifier_tfidf, 'c', mlb_classifier.classes, tfidf_reversed_vocab)
-	evaluation.print_words_for_tag(classifier_tfidf, 'c++', mlb_classifier.classes, tfidf_reversed_vocab)
-	evaluation.print_words_for_tag(classifier_tfidf, 'linux', mlb_classifier.classes, tfidf_reversed_vocab)
+	evaluate.print_words_for_tag(classifier_tfidf, 'c', mlb_classifier.classes, tfidf_reversed_vocab)
+	evaluate.print_words_for_tag(classifier_tfidf, 'c++', mlb_classifier.classes, tfidf_reversed_vocab)
+	evaluate.print_words_for_tag(classifier_tfidf, 'linux', mlb_classifier.classes, tfidf_reversed_vocab)
 
 
 if __name__ == "__main__":
