@@ -3,4 +3,7 @@ flake8
 dslinter
 mypy
 pylint
+docformatter
+black
+pytest
 dvc
