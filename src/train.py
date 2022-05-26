@@ -49,13 +49,12 @@ def main():
     y_val_predicted_labels_mybag = classifier_mybag.predict(X_val_mybag)
     y_val_predicted_labels_tfidf = classifier_tfidf.predict(X_val_tfidf)
 
+    dump(y_val, 'assets/outputs/y_val.joblib')
     dump(y_val_predicted_labels_mybag, 'assets/outputs/y_val_predicted_mybag.joblib')
     dump(y_val_predicted_labels_tfidf, 'assets/outputs/y_val_predicted_tfidf.joblib')
-    dump(classifier_mybag, 'assets/models/classifier_mybag.joblib')
-    dump(classifier_tfidf, 'assets/models/classifier_tfidf.joblib')
     dump(tfidf_reversed_vocab, 'assets/outputs/tf_idf_reversed_vocab.joblib')
+    dump(classifier_tfidf, 'assets/models/classifier_tfidf.joblib')
     dump(mlb_classifier, 'assets/models/mlb_classifier.joblib')
-    dump(y_val, 'assets/models/y_val.joblib')
 
     pass
 

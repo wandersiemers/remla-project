@@ -8,3 +8,29 @@ stages:
     - assets/data/processed/test.tsv
     - assets/data/processed/train.tsv
     - assets/data/processed/validation.tsv
+  train:
+    cmd: python src/train.py
+    deps:
+    - assets/data/processed
+    - src/train.py
+    outs:
+    - assets/models/classifier_tfidf.joblib
+    - assets/models/mlb_classifier.joblib
+    - assets/outputs/tf_idf_reversed_vocab.joblib
+    - assets/outputs/y_val.joblib
+    - assets/outputs/y_val_predicted_mybag.joblib
+    - assets/outputs/y_val_predicted_tfidf.joblib
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - assets/models/classifier_tfidf.joblib
+    - assets/models/mlb_classifier.joblib
+    - assets/outputs/tf_idf_reversed_vocab.joblib
+    - assets/outputs/y_val.joblib
+    - assets/outputs/y_val_predicted_mybag.joblib
+    - src/evaluate.py
+    metrics:
+    - assets/metrics/bag-of-words_metrics.json:
+        cache: false
+    - assets/metrics/tf-idf_metrics.json:
+        cache: false

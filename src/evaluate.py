@@ -11,13 +11,13 @@ def print_evaluation_scores(y_val, predicted):
     print('Average precision score: ', average_precision_score(y_val, predicted, average='macro'))
 
 
-def save_evaluation_scores(y_val, predicted):
+def save_evaluation_scores(y_val, predicted, algorithm):
     res = {
         'Accuracy': accuracy_score(y_val, predicted),
         'F1 score': f1_score(y_val, predicted, average='weighted'),
         'Average precision score': average_precision_score(y_val, predicted, average='macro')
     }
-    with open('assets/metrics.json', 'w') as f:
+    with open(f'assets/metrics/{algorithm}_metrics.json', 'w') as f:
         json.dump(res, f)
 
 
@@ -51,8 +51,7 @@ def print_words_for_tag(classifier, tag, tags_classes, index_to_words):
 
 
 def main():
-    y_val = load('assets/models/y_val.joblib')
-
+    y_val = load('assets/outputs/y_val.joblib')
     y_val_predicted_labels_mybag = load('assets/outputs/y_val_predicted_mybag.joblib')
     y_val_predicted_labels_tfidf = load('assets/outputs/y_val_predicted_tfidf.joblib')
     tfidf_reversed_vocab = load('assets/outputs/tf_idf_reversed_vocab.joblib')
@@ -61,8 +60,10 @@ def main():
 
     print('Bag-of-words')
     print_evaluation_scores(y_val, y_val_predicted_labels_mybag)
+    save_evaluation_scores(y_val, y_val_predicted_labels_mybag, 'bag-of-words')
     print('Tfidf')
     print_evaluation_scores(y_val, y_val_predicted_labels_tfidf)
+    save_evaluation_scores(y_val, y_val_predicted_labels_tfidf, 'tf-idf')
 
     print_words_for_tag(classifier_tfidf, 'c', mlb_classifier.classes, tfidf_reversed_vocab)
     print_words_for_tag(classifier_tfidf, 'c++', mlb_classifier.classes, tfidf_reversed_vocab)

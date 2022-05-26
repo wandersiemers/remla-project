@@ -20,3 +20,60 @@ stages:
     - path: assets/data/processed/validation.tsv
       md5: fa4dec3a691e4f8d85e3c10804eb8f26
       size: 1869916
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: assets/data/processed
+      md5: c4e0cb6980dfb09fda2d6313b2120fc2.dir
+      size: 8925070
+      nfiles: 4
+    - path: src/train.py
+      md5: c8cf4ca234702b39d751aea15cf57ac6
+      size: 2185
+    outs:
+    - path: assets/models/classifier_tfidf.joblib
+      md5: a87d6918aa0e8520d8776f5254d8db96
+      size: 14668735
+    - path: assets/models/mlb_classifier.joblib
+      md5: fe5c9a09e5441e81fd81da984584844e
+      size: 3299
+    - path: assets/outputs/tf_idf_reversed_vocab.joblib
+      md5: 7beede712c6d985e38ba5bd4479567e1
+      size: 304689
+    - path: assets/outputs/y_val.joblib
+      md5: 5f0321ea7c81661799dc9f85d7253600
+      size: 12000186
+    - path: assets/outputs/y_val_predicted_mybag.joblib
+      md5: 90c974a0c3cf96a2a3beea151c8b812a
+      size: 12000186
+    - path: assets/outputs/y_val_predicted_tfidf.joblib
+      md5: c26150978ec00daf88e0fcf91e874cd8
+      size: 12000186
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: assets/models/classifier_tfidf.joblib
+      md5: a87d6918aa0e8520d8776f5254d8db96
+      size: 14668735
+    - path: assets/models/mlb_classifier.joblib
+      md5: fe5c9a09e5441e81fd81da984584844e
+      size: 3299
+    - path: assets/outputs/tf_idf_reversed_vocab.joblib
+      md5: 7beede712c6d985e38ba5bd4479567e1
+      size: 304689
+    - path: assets/outputs/y_val.joblib
+      md5: 5f0321ea7c81661799dc9f85d7253600
+      size: 12000186
+    - path: assets/outputs/y_val_predicted_mybag.joblib
+      md5: 90c974a0c3cf96a2a3beea151c8b812a
+      size: 12000186
+    - path: src/evaluate.py
+      md5: be38e5e1e7e00280dd944dbe98753788
+      size: 3011
+    outs:
+    - path: assets/metrics/bag-of-words_metrics.json
+      md5: bb4d9834eb6fcf81ed2cb532506c0449
+      size: 112
+    - path: assets/metrics/tf-idf_metrics.json
+      md5: 67bc7f9554dc643ab22f499ec3d12aff
+      size: 112
