@@ -11,13 +11,13 @@ def test_read_file():
     assert validation.empty is False
     assert test.empty is False
 
-def test_text_prepare():
-	examples = ["SQL Server - any equivalent of Excel's CHOOSE function?",
-				"How to free c++ memory vector<int> * arr?"]
-	answers = ["sql server equivalent excels choose function", 
-			   "free c++ memory vectorint arr"]
-	for ex, ans in zip(examples, answers):
-		if preprocessing.text_prepare(ex) != ans:
-			return "Wrong answer for the case: '%s'" % ex
-	return 'Basic tests are passed.'
 
+def test_text_prepare():
+    examples = ["SQL Server - any equivalent of Excel's CHOOSE function?",
+                "How to free c++ memory vector<int> * arr?"]
+    answers = ["sql server equivalent excels choose function",
+               "free c++ memory vectorint arr"]
+    for ex, ans in zip(examples, answers):
+        if preprocessing.text_prepare(ex) != ans:
+            return "Wrong answer for the case: '%s'" % ex
+    return 'Basic tests are passed.'
