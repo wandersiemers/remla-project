@@ -1,30 +1,36 @@
-import nltk
-import pandas as pd
-import re
-from nltk.corpus import stopwords
 from ast import literal_eval
+import re
 
-nltk.download('stopwords')
-REPLACE_BY_SPACE_RE = re.compile('[/(){}\[\]\|@,;]')
-BAD_SYMBOLS_RE = re.compile('[^0-9a-z #+_]')
-STOPWORDS = set(stopwords.words('english'))
+import pandas as pd
+import numpy as np
+
+import nltk
+from nltk.corpus import stopwords
+
+nltk.download("stopwords")
+
+REPLACE_BY_SPACE_RE = re.compile(r"[/(){}\[\]\|@,;]")
+BAD_SYMBOLS_RE = re.compile(r"[^0-9a-z #+_]")
+STOP_WORDS = set(stopwords.words("english"))
 
 
-def read_data(filename):
-    data = pd.read_csv(filename, sep='\t')
-    data['tags'] = data['tags'].apply(literal_eval)
+def read_data(filename: str):
+    data = pd.read_csv(filename, sep="\t")
+    data["tags"] = data["tags"].apply(literal_eval)
+
     return data
 
 
-def text_prepare(text):
+def text_prepare(text: str):
     text = text.lower()
     text = re.sub(REPLACE_BY_SPACE_RE, " ", text)
     text = re.sub(BAD_SYMBOLS_RE, "", text)
-    text = " ".join([word for word in text.split() if not word in STOPWORDS])
+    text = " ".join([word for word in text.split() if word not in STOP_WORDS])
+
     return text
 
 
-def write_to_file(X, y=None, filename='test.tsv'):
+def write_to_file(X: list[str], y: np.ndarray = None, filename: str = 'test.tsv'):
     assert y is None or len(X) == len(y), "Number of feature rows should equal number of label lists"
     dataframe = pd.DataFrame({'title': X}) if y is None else pd.DataFrame({'title': X, 'tags': y})
     dataframe.to_csv(f'assets/data/processed/{filename}', sep='\t', index=False)

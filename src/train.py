@@ -1,14 +1,17 @@
 import pandas as pd
-from model import bag_of_words, mlb, tf_idf
-
+from typing import Dict
 from joblib import dump
-
+from model import (
+    bag_of_words,
+    mlb,
+    tf_idf
+)
 from preprocessing import read_data
 
 
-def get_corpus_counts(X_train, y_train):
-    tags_counts = {}
-    words_counts = {}
+def get_corpus_counts(X_train: list[str], y_train: list[str]):
+    tags_counts: Dict[str, int] = {}
+    words_counts: Dict[str, int] = {}
 
     for sentence in X_train:
         for word in sentence.split():
