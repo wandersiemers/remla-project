@@ -1,4 +1,5 @@
-nltk
-pandas
-numpy
-sklearn
+numpy==1.21.6
+pandas==1.4.2
+nltk==3.6.1
+scipy==1.8.1
+scikit-learn==1.1.1
