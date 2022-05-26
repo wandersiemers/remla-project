@@ -31,9 +31,10 @@ def text_prepare(text: str):
 
 
 def write_to_file(X: list[str], y: np.ndarray = None, filename: str = 'test.tsv'):
-    assert y is None or len(X) == len(y),\
+    assert y is None or len(X) == len(y), \
         "Number of feature rows should equal number of label lists"
-    dataframe = pd.DataFrame({'title': X}) if y is None else pd.DataFrame({'title': X, 'tags': y})
+    dataframe = pd.DataFrame({'title': X}) if y is None \
+        else pd.DataFrame({'title': X, 'tags': y})
     dataframe.to_csv(f'assets/data/processed/{filename}', sep='\t', index=False)
 
 

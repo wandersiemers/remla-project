@@ -25,7 +25,8 @@ def save_evaluation_scores(y_val: np.ndarray, predicted: np.ndarray, algorithm: 
     res = {
         'Accuracy': accuracy_score(y_val, predicted),
         'F1 score': f1_score(y_val, predicted, average='weighted'),
-        'Average precision score': average_precision_score(y_val, predicted, average='macro')
+        'Average precision score':
+            average_precision_score(y_val, predicted, average='macro')
     }
     with open(f'assets/metrics/{algorithm}_metrics.json', 'w', encoding='utf-8') as f:
         json.dump(res, f)
@@ -86,9 +87,12 @@ def main():
     print_evaluation_scores(y_val, y_val_predicted_labels_tfidf)
     save_evaluation_scores(y_val, y_val_predicted_labels_tfidf, 'tf-idf')
 
-    print_words_for_tag(classifier_tfidf, 'c', mlb_classifier.classes, tfidf_reversed_vocab)
-    print_words_for_tag(classifier_tfidf, 'c++', mlb_classifier.classes, tfidf_reversed_vocab)
-    print_words_for_tag(classifier_tfidf, 'linux', mlb_classifier.classes, tfidf_reversed_vocab)
+    print_words_for_tag(classifier_tfidf,
+                        'c', mlb_classifier.classes, tfidf_reversed_vocab)
+    print_words_for_tag(classifier_tfidf,
+                        'c++', mlb_classifier.classes, tfidf_reversed_vocab)
+    print_words_for_tag(classifier_tfidf,
+                        'linux', mlb_classifier.classes, tfidf_reversed_vocab)
 
 
 if __name__ == '__main__':
