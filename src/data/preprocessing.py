@@ -1,6 +1,6 @@
 from ast import literal_eval
 import re
-
+import os
 import pandas as pd
 import numpy as np
 
@@ -50,6 +50,8 @@ def main():
     X_train = [text_prepare(x) for x in X_train]
     X_val = [text_prepare(x) for x in X_val]
     X_test = [text_prepare(x) for x in X_test]
+
+    os.makedirs(os.path.join('assets', 'data', 'processed'), exist_ok=True)
 
     write_to_file(X_train, y_train, 'train.tsv')
     write_to_file(X_val, y_val, 'validation.tsv')

@@ -1,34 +1,25 @@
 stages:
   prepare:
-    cmd: python src/preprocessing.py
+    cmd: python src/data/preprocessing.py
     deps:
     - assets/data/raw
-    - src/preprocessing.py
+    - src/data/preprocessing.py
     outs:
-    - assets/data/processed/test.tsv
-    - assets/data/processed/train.tsv
-    - assets/data/processed/validation.tsv
+    - assets/data/processed
   train:
     cmd: python src/train.py
     deps:
     - assets/data/processed
     - src/train.py
     outs:
-    - assets/models/classifier_tfidf.joblib
-    - assets/models/mlb_classifier.joblib
-    - assets/outputs/tf_idf_reversed_vocab.joblib
-    - assets/outputs/y_val.joblib
-    - assets/outputs/y_val_predicted_mybag.joblib
-    - assets/outputs/y_val_predicted_tfidf.joblib
+    - assets/models
+    - assets/outputs
   evaluate:
-    cmd: python src/evaluate.py
+    cmd: python src/model/evaluate.py
     deps:
-    - assets/models/classifier_tfidf.joblib
-    - assets/models/mlb_classifier.joblib
-    - assets/outputs/tf_idf_reversed_vocab.joblib
-    - assets/outputs/y_val.joblib
-    - assets/outputs/y_val_predicted_mybag.joblib
-    - src/evaluate.py
+    - assets/models
+    - assets/outputs
+    - src/model/evaluate.py
     metrics:
     - assets/metrics/bag-of-words_metrics.json:
         cache: false

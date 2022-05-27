@@ -1,79 +1,57 @@
 schema: '2.0'
 stages:
   prepare:
-    cmd: python src/preprocessing.py
+    cmd: python src/data/preprocessing.py
     deps:
     - path: assets/data/raw
       md5: d187e13a5b048b30d8132ca1ba170ed8.dir
       size: 10408830
       nfiles: 4
-    - path: src/preprocessing.py
-      md5: 5f850424025c85e9ce8252185f8040df
-      size: 1806
+    - path: src/data/preprocessing.py
+      md5: 0dfe02014a832ae2a12af24d088c477a
+      size: 1894
     outs:
-    - path: assets/data/processed/test.tsv
-      md5: 553c3b24f961fee94c977f43afc1b2b3
-      size: 844664
-    - path: assets/data/processed/train.tsv
-      md5: 199bb897052ffe651d4fc24f9850d1e3
-      size: 6210438
-    - path: assets/data/processed/validation.tsv
-      md5: 0fd456d53ef7ba0ff7cf83697f2aee6e
-      size: 1869916
+    - path: assets/data/processed
+      md5: 5c7922ffed55407cd8c9ab62c812b2c1.dir
+      size: 8925018
+      nfiles: 3
   train:
     cmd: python src/train.py
     deps:
     - path: assets/data/processed
-      md5: 98cfa40d8ae8fb17af6650584ad8bded.dir
-      size: 8925058
-      nfiles: 4
+      md5: 5c7922ffed55407cd8c9ab62c812b2c1.dir
+      size: 8925018
+      nfiles: 3
     - path: src/train.py
-      md5: 91d40be1df793e692c217d405f2b0f44
-      size: 2321
+      md5: 900ec823bc639d4a51abea0afd592e9a
+      size: 2434
     outs:
-    - path: assets/models/classifier_tfidf.joblib
-      md5: 23312c6b2e030c0b94e949895b1b5544
-      size: 14668735
-    - path: assets/models/mlb_classifier.joblib
-      md5: fe5c9a09e5441e81fd81da984584844e
-      size: 3299
-    - path: assets/outputs/tf_idf_reversed_vocab.joblib
-      md5: 7beede712c6d985e38ba5bd4479567e1
-      size: 304689
-    - path: assets/outputs/y_val.joblib
-      md5: 5f0321ea7c81661799dc9f85d7253600
-      size: 12000186
-    - path: assets/outputs/y_val_predicted_mybag.joblib
-      md5: f4a3486a3484f35d8cb595175d537d41
-      size: 12000186
-    - path: assets/outputs/y_val_predicted_tfidf.joblib
-      md5: 0c7c74200427fb5efd1500460649b88e
-      size: 12000186
+    - path: assets/models
+      md5: 9862e495b93c894c9047bd174227c74a.dir
+      size: 14672034
+      nfiles: 2
+    - path: assets/outputs
+      md5: fe47715e0d96dc3334b3e525131feec4.dir
+      size: 36305247
+      nfiles: 4
   evaluate:
-    cmd: python src/evaluate.py
+    cmd: python src/model/evaluate.py
     deps:
-    - path: assets/models/classifier_tfidf.joblib
-      md5: 23312c6b2e030c0b94e949895b1b5544
-      size: 14668735
-    - path: assets/models/mlb_classifier.joblib
-      md5: fe5c9a09e5441e81fd81da984584844e
-      size: 3299
-    - path: assets/outputs/tf_idf_reversed_vocab.joblib
-      md5: 7beede712c6d985e38ba5bd4479567e1
-      size: 304689
-    - path: assets/outputs/y_val.joblib
-      md5: 5f0321ea7c81661799dc9f85d7253600
-      size: 12000186
-    - path: assets/outputs/y_val_predicted_mybag.joblib
-      md5: f4a3486a3484f35d8cb595175d537d41
-      size: 12000186
-    - path: src/evaluate.py
-      md5: 2e91a65f8c6178c5ab402ea168f646dd
-      size: 3306
+    - path: assets/models
+      md5: 9862e495b93c894c9047bd174227c74a.dir
+      size: 14672034
+      nfiles: 2
+    - path: assets/outputs
+      md5: fe47715e0d96dc3334b3e525131feec4.dir
+      size: 36305247
+      nfiles: 4
+    - path: src/model/evaluate.py
+      md5: 20780ab80e55c50160016ef71b3c5ea3
+      size: 3383
     outs:
     - path: assets/metrics/bag-of-words_metrics.json
-      md5: a70e33f1ecf2b4b8fa3a083f152538ae
-      size: 113
+      md5: 4b341f114e38dcb79f3170f6195bac14
+      size: 111
     - path: assets/metrics/tf-idf_metrics.json
-      md5: 21ccc45b3a699d25748cd5f1533d5762
-      size: 98
+      md5: 73ae0a27beff73c5a8597ef716082d28
+      size: 113
