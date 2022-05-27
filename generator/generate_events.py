@@ -1,6 +1,7 @@
-import time
 import random
 import threading
+import time
+
 import requests
 
 endpoints = ("predict", "dumb_predict")

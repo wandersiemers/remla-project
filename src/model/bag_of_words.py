@@ -3,7 +3,6 @@ from typing import Dict
 import numpy as np
 from scipy import sparse as sp_sparse
 
-
 DICT_SIZE = 5000
 
 
