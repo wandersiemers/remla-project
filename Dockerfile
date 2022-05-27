@@ -7,4 +7,6 @@ RUN pip install -r /tmp/requirements.txt
 ADD src /var/server/src
 ADD assets /var/server/assets
 
+WORKDIR /var/server
+
 CMD python /var/server/src/serve_model.py

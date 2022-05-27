@@ -4,7 +4,7 @@ import threading
 import requests
 
 endpoints = ("predict", "dumb_predict")
-HOST = "http://127.0.0.1:8080/"
+HOST = "http://app:5000/"
 
 
 def run():
