@@ -56,7 +56,7 @@ def print_words_for_tag(
             all words in the dictionary
     """
 
-    print("fTag:\t{tag}")
+    print(f"Tag:\t{tag}")
 
     # Extract an estimator from the classifier for the given tag.
     # Extract feature coefficients from the estimator.

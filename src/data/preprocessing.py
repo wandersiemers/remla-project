@@ -38,14 +38,19 @@ def write_to_file(X: list[str], y: np.ndarray = None, filename: str = 'test.tsv'
     dataframe.to_csv(f'assets/data/processed/{filename}', sep='\t', index=False)
 
 
-def main():
-    train = read_data('assets/data/raw/train.tsv')
-    validation = read_data('assets/data/raw/validation.tsv')
-    test = pd.read_csv('assets/data/raw/test.tsv', sep='\t')
+def read_files(directory: str):
+    train = read_data(f'assets/data/{directory}/train.tsv')
+    validation = read_data(f'assets/data/{directory}/validation.tsv')
+    test = pd.read_csv(f'assets/data/{directory}/test.tsv', sep='\t')
 
     X_train, y_train = train['title'].values, train['tags'].values
     X_val, y_val = validation['title'].values, validation['tags'].values
     X_test = test['title'].values
+
+    return X_train, y_train, X_val, y_val, X_test
+
+def main():
+    X_train, y_train, X_val, y_val, X_test = read_files('raw')
 
     X_train = [text_prepare(x) for x in X_train]
     X_val = [text_prepare(x) for x in X_val]
