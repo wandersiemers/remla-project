@@ -2,6 +2,7 @@ from typing import Dict
 import json
 
 import numpy as np
+import os
 
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
@@ -79,6 +80,8 @@ def main():
     tfidf_reversed_vocab = load('assets/outputs/tf_idf_reversed_vocab.joblib')
     classifier_tfidf = load('assets/models/classifier_tfidf.joblib')
     mlb_classifier = load('assets/models/mlb_classifier.joblib')
+
+    os.makedirs(os.path.join('assets', 'metrics'), exist_ok=True)
 
     print('Bag-of-words')
     print_evaluation_scores(y_val, y_val_predicted_labels_mybag)

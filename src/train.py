@@ -1,13 +1,13 @@
-# pylint: disable=too-many-locals
 from typing import Dict
 import pandas as pd
+import os
 from joblib import dump
 from model import (
     bag_of_words,
     mlb,
     tf_idf
 )
-from preprocessing import read_data
+from data.preprocessing import read_data
 
 
 def get_corpus_counts(X_train: list[str], y_train: list[str]):
@@ -54,6 +54,9 @@ def main():
 
     y_val_predicted_labels_mybag = classifier_mybag.predict(X_val_mybag)
     y_val_predicted_labels_tfidf = classifier_tfidf.predict(X_val_tfidf)
+
+    os.makedirs(os.path.join('assets', 'outputs'), exist_ok=True)
+    os.makedirs(os.path.join('assets', 'models'), exist_ok=True)
 
     dump(y_val, 'assets/outputs/y_val.joblib')
     dump(y_val_predicted_labels_mybag, 'assets/outputs/y_val_predicted_mybag.joblib')
