@@ -6,3 +6,4 @@ pylint
 docformatter
 black
 pytest
+bandit
