@@ -5,7 +5,7 @@ import joblib
 from flask import Flask, jsonify, request
 from flasgger import Swagger
 
-from preprocessing import text_prepare
+from data.preprocessing import text_prepare
 from prometheus_flask_exporter import PrometheusMetrics
 
 
