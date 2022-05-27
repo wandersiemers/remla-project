@@ -1,0 +1,41 @@
+version: '2'
+services:
+
+  # a sample app with metrics enabled
+  app:
+    container_name: app
+    build:
+      context: .
+    stop_signal: SIGKILL
+    ports:
+      - 8080:8080
+
+  # dumb, random load generator
+  generator:
+    build:
+      context: generator
+    stop_signal: SIGKILL
+    depends_on:
+      - app
+
+  # the Prometheus server
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.2.1
+    volumes:
+      - ./prometheus/config.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - app
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:5.1.0
+    volumes:
+      - ./grafana/config.ini:/etc/grafana/grafana.ini
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/default.yaml
+      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/default.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus

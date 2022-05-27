@@ -6,10 +6,12 @@ from flask import Flask, jsonify, request
 from flasgger import Swagger
 
 from preprocessing import text_prepare
-from model.tf_idf import tfidf_features
+from prometheus_flask_exporter import PrometheusMetrics
+
 
 app = Flask(__name__)
 swagger = Swagger(app)
+PrometheusMetrics(app)
 
 vectorizer = joblib.load('assets/outputs/tfidf-vectorizer.joblib')
 model = joblib.load('assets/models/classifier_tfidf.joblib')
