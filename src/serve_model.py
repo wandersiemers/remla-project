@@ -11,6 +11,9 @@ from model.tf_idf import tfidf_features
 app = Flask(__name__)
 swagger = Swagger(app)
 
+vectorizer = joblib.load('assets/outputs/tfidf-vectorizer.joblib')
+model = joblib.load('assets/models/classifier_tfidf.joblib')
+mlb_classifier = joblib.load('assets/models/mlb_classifier.joblib')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -38,15 +41,12 @@ def predict():
     input_data = request.get_json()
     title = input_data.get('title')
     processed_title = text_prepare(title)
-    print(processed_title)
-    features, _, _, _ = tfidf_features(processed_title, [], [])
-    model = joblib.load('assets/models/classifier_tfidf.joblib')
-    prediction = model.predict(features)
-    print(prediction)
+    prediction = model.predict(vectorizer.transform([processed_title]))
+    result = mlb_classifier.inverse_transform(prediction)
 
     return jsonify({
-        "result": prediction,
-        "classifier": "decision tree",
+        "result": result,
+        "classifier": "logistic classifier",
         "title": title
     })
 
