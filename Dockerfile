@@ -11,12 +11,8 @@ RUN mkdir output &&\
 COPY src src
 COPY data data
 
-# TODO needs the structure already in place to work
-RUN python src/read_data.py &&\
-	python src/text_preprocessing.py &&\
-	python src/text_classification.py
-
-EXPOSE 8080
-
-ENTRYPOINT ["python"]
-CMD ["src/serve_model.py"]
+# TODO Run the data processing scripts
+# TODO run the inference server once ready
+# EXPOSE 8080
+# ENTRYPOINT ["python"]
+# CMD ["src/serve_model.py"]
