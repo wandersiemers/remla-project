@@ -2,12 +2,9 @@ name: Publish
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, 2-automate-pipeline ]
     tags: ["v[0-9]+.[0-9]+.[0-9]+"]
-
-  push:
-    branches: [ 2-automate-pipeline ]
-
+    
 jobs:
   build:
     runs-on: ubuntu-20.04
