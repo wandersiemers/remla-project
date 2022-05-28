@@ -25,8 +25,8 @@ jobs:
         pip install -r requirements.txt
 
     - name: Install test dependencies
-        run: 
-          pip install flake8 pytest pytest-cov
+      run: 
+        pip install flake8 pytest pytest-cov
 
     - name: Build coverage file
       run:
@@ -39,18 +39,18 @@ jobs:
         junitxml-path: ./pytest.xml
 
     - name: Check the output coverage
-        run: |
-          echo "Coverage Percantage - ${{ steps.coverageComment.outputs.coverage }}"
-          echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
-          echo "Coverage Html - ${{ steps.coverageComment.outputs.coverageHtml }}"
-          echo "Coverage Warnings - ${{ steps.coverageComment.outputs.warnings }}"
-          echo "Coverage Errors - ${{ steps.coverageComment.outputs.errors }}"
-          echo "Coverage Failures - ${{ steps.coverageComment.outputs.failures }}"
-          echo "Coverage Skipped - ${{ steps.coverageComment.outputs.skipped }}"
-          echo "Coverage Tests - ${{ steps.coverageComment.outputs.tests }}"
-          echo "Coverage Time - ${{ steps.coverageComment.outputs.time }}"
-          echo "Not Success Test Info - ${{ steps.coverageComment.outputs.notSuccessTestInfo }}"
-    
+      run:
+        echo "Coverage Percantage - ${{ steps.coverageComment.outputs.coverage }}"
+        echo "Coverage Color - ${{ steps.coverageComment.outputs.color }}"
+        echo "Coverage Html - ${{ steps.coverageComment.outputs.coverageHtml }}"
+        echo "Coverage Warnings - ${{ steps.coverageComment.outputs.warnings }}"
+        echo "Coverage Errors - ${{ steps.coverageComment.outputs.errors }}"
+        echo "Coverage Failures - ${{ steps.coverageComment.outputs.failures }}"
+        echo "Coverage Skipped - ${{ steps.coverageComment.outputs.skipped }}"
+        echo "Coverage Tests - ${{ steps.coverageComment.outputs.tests }}"
+        echo "Coverage Time - ${{ steps.coverageComment.outputs.time }}"
+        echo "Not Success Test Info - ${{ steps.coverageComment.outputs.notSuccessTestInfo }}"
+        
     - name: Create the Badge
       uses: schneegans/dynamic-badges-action@v1.0.0
       with:
