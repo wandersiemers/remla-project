@@ -1,9 +1,7 @@
 name: tests
 
 on:
-  pull_request:
-    branches:
-      - '*'
+  [push, pull_request]
 
 jobs:
   tests:
