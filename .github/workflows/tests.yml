@@ -21,9 +21,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install pytest
+        pip install pytest coverage
 
     - name: Run tests
       run: |
-        pytest --exitfirst --verbose --failed-first \
-        --cov=. --cov-report html
+        coverage run -m pytest
