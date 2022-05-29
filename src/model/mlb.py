@@ -1,8 +1,8 @@
 from typing import Dict
 
-from sklearn.preprocessing import MultiLabelBinarizer
-from sklearn.multiclass import OneVsRestClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.preprocessing import MultiLabelBinarizer
 
 
 def get_mlb(tags_counts: Dict[str, int], y_train: list[str], y_val: list[str]):
