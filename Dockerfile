@@ -1,11 +1,11 @@
 FROM python:3.9
 
-ADD requirements.txt /tmp/requirements.txt
+COPY requirements.txt /tmp/requirements.txt
 
 RUN pip install -r /tmp/requirements.txt
 
-ADD src /var/server/src
-ADD assets /var/server/assets
+COPY src /var/server/src
+COPY assets /var/server/assets
 
 WORKDIR /var/server
 
