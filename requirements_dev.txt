@@ -6,3 +6,5 @@ pylint
 docformatter
 black
 pytest
+dvc
+dvc[gdrive]
