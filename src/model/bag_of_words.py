@@ -3,7 +3,6 @@ from typing import Dict
 import numpy as np
 from scipy import sparse as sp_sparse
 
-
 DICT_SIZE = 5000
 
 
@@ -33,7 +32,7 @@ def initialize(
     X_test: list[str],
 ) -> sp_sparse.bmat:
     index_to_words: list[str] = sorted(
-        words_counts, key=words_counts.get, reverse=True
+        words_counts, key=words_counts.get, reverse=True  # type: ignore
     )[:DICT_SIZE]
 
     words_to_index = {word: i for i, word in enumerate(index_to_words)}

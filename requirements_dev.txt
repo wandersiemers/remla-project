@@ -8,3 +8,5 @@ black
 pytest
 bandit
 isort
+dvc
+dvc[gdrive]
