@@ -1,4 +1,5 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+from joblib import dump
 
 
 class BaseModel:
@@ -18,9 +19,8 @@ class BaseModel:
     def predict(self, X_test):
         raise NotImplementedError
 
-    @abstractmethod
     def save(self, path: str):
-        raise NotImplementedError
+        dump(self, path)
 
     def set_logging(self, flag: bool):
         self.logging = flag

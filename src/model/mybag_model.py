@@ -3,7 +3,6 @@ from typing import Dict, Any
 from sklearn.linear_model import LogisticRegression
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
-from joblib import dump, load
 import numpy as np
 from scipy import sparse as sp_sparse
 
@@ -61,6 +60,3 @@ class MyBagModel(BaseModel):
     def predict(self, X_test):
         featurized = self.get_features(X_test)
         return self.classifier.predict(featurized)
-
-    def save(self, path):
-        dump(self, path)

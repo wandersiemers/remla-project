@@ -1,10 +1,9 @@
-from src.model.base_model import BaseModel
 from typing import Dict, Any
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
-from joblib import dump, load
+from src.model.base_model import BaseModel
 
 
 class TfidfModel(BaseModel):
@@ -36,6 +35,3 @@ class TfidfModel(BaseModel):
     def predict(self, X_test):
         featurized = self.get_features(X_test)
         return self.classifier.predict(featurized)
-
-    def save(self, path):
-        dump(self, path)
