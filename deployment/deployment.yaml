@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remla
+  namespace: remla
+  labels:
+    app: remla
+spec:
+  minReadySeconds: 5
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: remla
+  template:
+    metadata:
+      namespace: remla
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9797"
+      labels:
+        app: remla
+    spec:
+      containers:
+      - name: remla
+        # todo - add the remla inference image
+        image: stefanprodan/podinfo:6.0.1
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        # todo - mount the volumes here
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        - name: http-metrics
+          containerPort: 9797
+          protocol: TCP
