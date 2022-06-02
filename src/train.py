@@ -1,10 +1,9 @@
 import os
 from typing import Dict
 
-import pandas as pd
 from joblib import dump
 
-from data.preprocessing import read_data
+from data.preprocessing import read_files
 from model import bag_of_words, mlb, tf_idf
 
 
@@ -30,13 +29,7 @@ def get_corpus_counts(X_train: list[str], y_train: list[str]):
 
 
 def main():
-    train = read_data("assets/data/processed/train.tsv")
-    validation = read_data("assets/data/processed/validation.tsv")
-    test = pd.read_csv("assets/data/processed/test.tsv", sep="\t")
-
-    X_train, y_train = train["title"].values, train["tags"].values
-    X_val, y_val = validation["title"].values, validation["tags"].values
-    X_test = test["title"].values
+    X_train, y_train, X_val, y_val, X_test = read_files("processed")
 
     words_counts, tags_counts = get_corpus_counts(X_train, y_train)
     X_train_mybag, X_val_mybag = bag_of_words.initialize(
