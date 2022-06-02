@@ -1,14 +1,18 @@
 from abc import abstractmethod
+
 from joblib import dump
 
 
 class BaseModel:
-
     def __init__(self, logging=True):
         self.logging = logging
 
     @abstractmethod
     def get_features(self, X):
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_labels(self, X):
         raise NotImplementedError
 
     @abstractmethod

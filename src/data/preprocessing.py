@@ -5,14 +5,9 @@ from ast import literal_eval
 import nltk
 import numpy as np
 import pandas as pd
-import wandb
 from nltk.corpus import stopwords
 
-nltk.download("stopwords")
-
-REPLACE_BY_SPACE_RE = re.compile(r"[/(){}\[\]\|@,;]")
-BAD_SYMBOLS_RE = re.compile(r"[^0-9a-z #+_]")
-STOP_WORDS = set(stopwords.words("english"))
+import wandb
 
 
 def read_data(filename: str):
@@ -23,10 +18,16 @@ def read_data(filename: str):
 
 
 def text_prepare(text: str):
+    nltk.download("stopwords")
+
+    replace_by_space_re = re.compile(r"[/(){}\[\]\|@,;]")
+    bad_symbols_re = re.compile(r"[^0-9a-z #+_]")
+    stop_words = set(stopwords.words("english"))
+
     text = text.lower()
-    text = re.sub(REPLACE_BY_SPACE_RE, " ", text)
-    text = re.sub(BAD_SYMBOLS_RE, "", text)
-    text = " ".join([word for word in text.split() if word not in STOP_WORDS])
+    text = re.sub(replace_by_space_re, " ", text)
+    text = re.sub(bad_symbols_re, "", text)
+    text = " ".join([word for word in text.split() if word not in stop_words])
 
     return text
 
@@ -58,7 +59,11 @@ def read_files(directory: str):
 
 
 def main():
-    wandb.init(project="Multilabel classification on Stack Overflow tags", entity="remla-2022-group-8")
+    wandb.init(
+        project="Multilabel classification on Stack Overflow tags",
+        entity="remla-2022-group-8",
+        tags=["data"],
+    )
 
     X_train, y_train, X_val, y_val, X_test = read_files("raw")
 
@@ -77,6 +82,8 @@ def main():
     classes = set(np.concatenate((y_train_labels, y_val_labels)))
 
     wandb.sklearn.plot_class_proportions(y_train_labels, y_val_labels, classes)
+
+    wandb.finish()
 
 
 if __name__ == "__main__":

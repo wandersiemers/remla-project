@@ -13,15 +13,8 @@ stages:
     - src/train.py
     outs:
     - assets/models
-    - assets/outputs
   evaluate:
-    cmd: python src/model/evaluate.py
+    cmd: python src/evaluate.py
     deps:
     - assets/models
-    - assets/outputs
-    - src/model/evaluate.py
-    metrics:
-    - assets/metrics/bag-of-words_metrics.json:
-        cache: false
-    - assets/metrics/tf-idf_metrics.json:
-        cache: false
+    - src/evaluate.py
