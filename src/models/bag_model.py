@@ -11,7 +11,7 @@ from .base_model import BaseModel
 DEFAULT_BAG_MODEL_CONFIG = {"C": 1, "penalty": "l1", "dict_size": 5000}
 
 
-def _bag_of_words(text: str, words_to_index: Dict[str, int], dict_size: int):
+def bag_of_words(text: str, words_to_index: Dict[str, int], dict_size: int):
     result_vector = np.zeros(dict_size)
 
     for word in text.split():
@@ -26,7 +26,7 @@ def _sparse_bag_of_words(
 ) -> sp_sparse.bmat:
     return sp_sparse.vstack(
         [
-            sp_sparse.csr_matrix(_bag_of_words(text, words_to_index, dict_size))
+            sp_sparse.csr_matrix(bag_of_words(text, words_to_index, dict_size))
             for text in X
         ]
     )

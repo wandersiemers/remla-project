@@ -1,10 +1,11 @@
 import os
 from typing import Dict, List, Tuple, Type
 
-from data.preprocessing import read_files
 from model.bag_model import BagModel
 from model.base_model import BaseModel
 from model.tfidf_model import TfIdfModel
+
+from data.preprocessing import read_files
 
 
 def get_corpus_counts(X_train: list[str], y_train: list[str]):

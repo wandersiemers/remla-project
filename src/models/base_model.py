@@ -12,7 +12,7 @@ class BaseModel:
         raise NotImplementedError
 
     @abstractmethod
-    def get_labels(self, X):
+    def get_labels(self, y):
         raise NotImplementedError
 
     @abstractmethod
