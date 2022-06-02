@@ -5,6 +5,7 @@ from ast import literal_eval
 import nltk
 import numpy as np
 import pandas as pd
+import wandb
 from nltk.corpus import stopwords
 
 nltk.download("stopwords")
@@ -57,6 +58,8 @@ def read_files(directory: str):
 
 
 def main():
+    wandb.init(project="Multilabel classification on Stack Overflow tags", entity="remla-2022-group-8")
+
     X_train, y_train, X_val, y_val, X_test = read_files("raw")
 
     X_train = [text_prepare(x) for x in X_train]
@@ -68,6 +71,12 @@ def main():
     write_to_file(X_train, y_train, "train.tsv")
     write_to_file(X_val, y_val, "validation.tsv")
     write_to_file(X_test)
+
+    y_train_labels = np.concatenate(y_train)
+    y_val_labels = np.concatenate(y_val)
+    classes = set(np.concatenate((y_train_labels, y_val_labels)))
+
+    wandb.sklearn.plot_class_proportions(y_train_labels, y_val_labels, classes)
 
 
 if __name__ == "__main__":
