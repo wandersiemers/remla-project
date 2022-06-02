@@ -24,10 +24,12 @@ spec:
   # to make progress before it is rollback (default 600s)
   progressDeadlineSeconds: 60
   service:
+    portName: http
     # ClusterIP port number
     port: 80
     # container port number or name
     targetPort: 80
+    portDiscovery: true
   analysis:
     # schedule interval (default 60s)
     interval: 10s
@@ -39,17 +41,29 @@ spec:
     # canary increment step
     # percentage (0-100)
     stepWeight: 10
-    # NGINX Prometheus checks
-    # metrics:
-    # - name: request-success-rate
-    #   # minimum req success rate (non 5xx responses)
-    #   # percentage (0-100)
+    metrics: # adding this metric fails 
+      - name: request-success-rate
+        thresholdRange:
+          min: 50
+        interval: 1m
+    # - name: error-rate
+    #   templateRef:
+    #     name: not-found-percentage
+    #     namespace: remla
     #   thresholdRange:
-    #     min: 99
+    #     max: 5
     #   interval: 1m
-    # webhooks:
-    # - name: load-test
-    #   url: http://flagger-loadtester.remla/
-    #   timeout: 5s
-    #   metadata:
-    #     cmd: "hey -z 1m -q 5 -c 2 http://remla.remla:9898/"
+    # - name: latency
+    #   templateRef:
+    #     name: latency
+    #     namespace: remla
+    #   thresholdRange:
+    #     max: 100
+    #   interval: 1m
+    
+    webhooks:
+    - name: load-test
+      url: http://flagger-loadtester.remla/
+      timeout: 5s
+      metadata:
+        cmd: "hey -z 1m -q 10 -c 2 --host  http://remla-canary.remla:80/"
