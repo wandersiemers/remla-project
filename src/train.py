@@ -31,6 +31,10 @@ def get_corpus_counts(X_train: list[str], y_train: list[str]):
 def main():
     X_train, y_train, X_val, y_val, X_test = read_files("processed")
 
+    # Create directories for the outputs of this stage
+    os.makedirs(os.path.join("assets", "outputs"), exist_ok=True)
+    os.makedirs(os.path.join("assets", "models"), exist_ok=True)
+
     words_counts, tags_counts = get_corpus_counts(X_train, y_train)
     X_train_mybag, X_val_mybag = bag_of_words.initialize(
         words_counts, X_train, X_val, X_test
@@ -47,9 +51,6 @@ def main():
 
     y_val_predicted_labels_mybag = classifier_mybag.predict(X_val_mybag)
     y_val_predicted_labels_tfidf = classifier_tfidf.predict(X_val_tfidf)
-
-    os.makedirs(os.path.join("assets", "outputs"), exist_ok=True)
-    os.makedirs(os.path.join("assets", "models"), exist_ok=True)
 
     dump(y_val, "assets/outputs/y_val.joblib")
     dump(y_val_predicted_labels_mybag, "assets/outputs/y_val_predicted_mybag.joblib")
