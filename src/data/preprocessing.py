@@ -8,6 +8,7 @@ import pandas as pd
 from nltk.corpus import stopwords
 
 import wandb
+from config import wandb_entity, wandb_project_name
 
 
 def read_data(filename: str):
@@ -60,8 +61,8 @@ def read_files(directory: str):
 
 def main():
     wandb.init(
-        project="Multilabel classification on Stack Overflow tags",
-        entity="remla-2022-group-8",
+        project=wandb_project_name,
+        entity=wandb_entity,
         tags=["data"],
     )
 
