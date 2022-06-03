@@ -2,6 +2,10 @@
 
 This project is used a starting point for the course [*Release Engineering for Machine Learning Applications* (REMLA)] taught at the Delft University of Technology by [Prof. Luís Cruz] and [Prof. Sebastian Proksch].
 
+## Installation
+
+Run: `pip install -e .`
+
 ## Implementation
 
 ### Multilabel classification on Stack Overflow tags

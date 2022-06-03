@@ -1,11 +1,10 @@
 import os
 from typing import Dict, List, Tuple, Type
 
+from remla.data.preprocessing import read_files
 from remla.models.bag_model import BagModel
 from remla.models.base_model import BaseModel
 from remla.models.tfidf_model import TfIdfModel
-
-from remla.data.preprocessing import read_files
 
 
 def get_corpus_counts(X_train: list[str], y_train: list[str]):
