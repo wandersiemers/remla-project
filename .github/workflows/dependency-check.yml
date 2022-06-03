@@ -3,12 +3,12 @@ name: Check dependencies using safety
 on:
   push:
     paths:
-      - requirements.txt
+      - setup.cfg
       - .github/workflows/dependency-check.yml
     branches: [ main ]
   pull_request:
     paths:
-      - requirements.txt
+      - setup.cfg
       - .github/workflows/dependency-check.yml
     # The branches below must be a subset of the branches above
     branches: [ main ]
