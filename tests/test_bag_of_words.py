@@ -1,4 +1,4 @@
-from src.models.bag_model import bag_of_words
+from remla.models.bag_model import bag_of_words
 
 
 def test_bag_of_words():

@@ -1,4 +1,4 @@
-from src.data import preprocessing
+from remla.data import pre_processing
 
 
 def test_text_prepare():
@@ -13,7 +13,7 @@ def test_text_prepare():
     ]
 
     for ex, ans in zip(examples, answers):
-        if preprocessing.text_prepare(ex) != ans:
+        if pre_processing.text_prepare(ex) != ans:
             return f"Wrong answer for the case: '{ex}'"
 
     return "Basic tests are passed."

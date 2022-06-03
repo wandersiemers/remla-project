@@ -49,7 +49,7 @@ Find the commands per tool below:
 
 - `mllint`: `mllint .`
 - `flake8`: `flake8 .`
-- `pylint`: `pylint .`
+- `pylint`: `pylint src && pylint tests`
 - `mypy`: `mypy .`
 
 [*Release Engineering for Machine Learning Applications* (REMLA)]: https://se.ewi.tudelft.nl/remla/ 
