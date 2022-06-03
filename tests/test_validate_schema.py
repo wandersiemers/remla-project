@@ -15,14 +15,14 @@ def get_anomalies(filename: str):
 
 def test_train_schema():
     train_anomalies = get_anomalies('train')
-    assert len(train_anomalies.anomaly_info) == 0
+    assert not train_anomalies.anomaly_info
 
 
 def test_validation_schema():
     validation_anomalies = get_anomalies('validation')
-    assert len(validation_anomalies.anomaly_info) == 0
+    assert not validation_anomalies.anomaly_info
 
 
 def test_test_schema():
     test_anomalies = get_anomalies('test')
-    assert len(test_anomalies.anomaly_info) == 1
+    assert test_anomalies.anomaly_info
