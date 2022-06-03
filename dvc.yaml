@@ -1,20 +1,20 @@
 stages:
   prepare:
-    cmd: python src/data/preprocessing.py
+    cmd: python src/remla/data/prep_rocessing.py
     deps:
     - assets/data/raw
-    - src/data/preprocessing.py
+    - src/remla/data/pre_processing.py
     outs:
     - assets/data/processed
   train:
-    cmd: python src/train.py
+    cmd: python src/remla/train.py
     deps:
     - assets/data/processed
-    - src/train.py
+    - src/remla/train.py
     outs:
     - assets/models
   evaluate:
-    cmd: python src/evaluate.py
+    cmd: python src/remla/evaluate.py
     deps:
     - assets/models
-    - src/evaluate.py
+    - src/remla/evaluate.py

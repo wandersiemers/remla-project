@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
 
-from .base_model import BaseModel
+from remla.models.base_model import BaseModel
 
 DEFAULT_TF_IDF_MODEL_CONFIG = {"C": 1, "penalty": "l1", "dict_size": 5000}
 

@@ -8,7 +8,7 @@ import pandas as pd
 from nltk.corpus import stopwords
 
 import wandb
-from config import wandb_entity, wandb_project_name
+from remla.config import wandb_entity, wandb_project_name
 
 
 def read_data(filename: str):
@@ -19,8 +19,6 @@ def read_data(filename: str):
 
 
 def text_prepare(text: str):
-    nltk.download("stopwords")
-
     replace_by_space_re = re.compile(r"[/(){}\[\]\|@,;]")
     bad_symbols_re = re.compile(r"[^0-9a-z #+_]")
     stop_words = set(stopwords.words("english"))
@@ -65,6 +63,8 @@ def main():
         entity=wandb_entity,
         tags=["data"],
     )
+
+    nltk.download("stopwords")
 
     X_train, y_train, X_val, y_val, X_test = read_files("raw")
 

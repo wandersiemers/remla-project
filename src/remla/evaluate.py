@@ -3,13 +3,13 @@ from typing import Dict, Type
 
 import numpy as np
 from joblib import load
-from model.base_model import BaseModel
+from remla.models.base_model import BaseModel
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score, average_precision_score, f1_score
 
 import wandb
-from config import wandb_entity, wandb_project_name
-from data.preprocessing import read_files
+from remla.config import wandb_entity, wandb_project_name
+from remla.data.preprocessing import read_files
 
 
 def log_evaluation_scores(
