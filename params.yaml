@@ -1,0 +1,9 @@
+# Module key is relative with respect to src/remla/models directory
+
+models:
+  - module: bag_model
+    class: BagModel
+    config: bag_model_config
+  - module: tfidf_model
+    class: TfIdfModel
+    config: tfidf_model_config

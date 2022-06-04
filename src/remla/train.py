@@ -1,53 +1,38 @@
+import argparse
+import importlib
 import os
-from typing import Dict, List, Tuple, Type
+from typing import Type
 
 from remla.data.pre_processing import read_files
-from remla.models.bag_model import BagModel
 from remla.models.base_model import BaseModel
-from remla.models.tfidf_model import TfIdfModel
-
-
-def get_corpus_counts(X_train: list[str], y_train: list[str]):
-    tags_counts: Dict[str, int] = {}
-    words_counts: Dict[str, int] = {}
-
-    for sentence in X_train:
-        for word in sentence.split():
-            if word in words_counts:
-                words_counts[word] += 1
-            else:
-                words_counts[word] = 1
-
-    for tags in y_train:
-        for tag in tags:
-            if tag in tags_counts:
-                tags_counts[tag] += 1
-            else:
-                tags_counts[tag] = 1
-
-    return words_counts, tags_counts
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Train a machine learning model on processed data from the data pipeline"
+    )
+    parser.add_argument("-mdl", "--model-name", help="Name of the model", required=True)
+    parser.add_argument(
+        "-mod", "--module-name", help="Name of the module", required=True
+    )
+    args = parser.parse_args()
+
+    model_name: str = args.model_name
+    module_name: str = args.module_name
+
     X_train, y_train, _, _, _ = read_files("processed")
 
-    words_counts, tags_counts = get_corpus_counts(X_train, y_train)
+    module = importlib.import_module(module_name)
+
+    Model: Type[BaseModel] = getattr(module, model_name)
 
     # Make sure that we can save the models
     os.makedirs(os.path.join("assets", "models"), exist_ok=True)
 
-    base_config = {"classes": tags_counts.keys(), "words_counts": words_counts}
+    model = Model(True, {})
 
-    models: List[Tuple[str, Type[BaseModel], Dict]] = [
-        ("tfidf_classifier", TfIdfModel, base_config),
-        ("bag_classifier", BagModel, base_config),
-    ]
-
-    for classifier_name, Model, model_config in models:
-        model = Model(True, model_config)
-
-        model.train(model.get_features(X_train), model.get_labels(y_train))
-        model.save(f"assets/models/{classifier_name}.joblib")
+    model.train(X_train, y_train)
+    model.save(f"assets/models/{model_name}.joblib")
 
 
 if __name__ == "__main__":

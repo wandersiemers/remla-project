@@ -1,26 +1,30 @@
 from abc import abstractmethod
+from typing import Generic, TypeVar
 
 from joblib import dump
 
+T = TypeVar("T")
+U = TypeVar("U")
 
-class BaseModel:
-    def __init__(self, logging=True):
+
+class BaseModel(Generic[T, U]):
+    def __init__(self, logging: bool = True):
         self.logging = logging
 
     @abstractmethod
-    def get_features(self, X):
+    def get_features(self, X: T):
         raise NotImplementedError
 
     @abstractmethod
-    def get_labels(self, y):
+    def get_labels(self, y: U):
         raise NotImplementedError
 
     @abstractmethod
-    def train(self, X_train, y_train):
+    def train(self, X_train: T, y_train: U):
         raise NotImplementedError
 
     @abstractmethod
-    def predict(self, X_test):
+    def predict(self, X_test: T) -> U:
         raise NotImplementedError
 
     def save(self, path: str):

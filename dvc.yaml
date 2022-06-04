@@ -1,20 +1,30 @@
 stages:
   prepare:
-    cmd: python src/remla/data/prep_rocessing.py
+    cmd: python src/remla/data/pre_processing.py
     deps:
     - assets/data/raw
     - src/remla/data/pre_processing.py
     outs:
     - assets/data/processed
   train:
-    cmd: python src/remla/train.py
-    deps:
-    - assets/data/processed
-    - src/remla/train.py
-    outs:
-    - assets/models
+    foreach: ${models}
+    do:
+      cmd: python src/remla/train.py --module-name="remla.models.${item.module}" --model-name="${item.class}"
+      deps:
+      - assets/data/processed
+      - src/remla/train.py
+      - src/remla/models/${item.module}.py
+      params:
+        - models
+      outs:
+      - assets/models/${item.class}.joblib
   evaluate:
-    cmd: python src/remla/evaluate.py
-    deps:
-    - assets/models
-    - src/remla/evaluate.py
+    foreach: ${models}
+    do:
+      cmd: python src/remla/evaluate.py --joblib-file-path="assets/models/${item.class}.joblib"
+      deps:
+      - assets/data/processed
+      - src/remla/evaluate.py
+      - assets/models/${item.class}.joblib
+      params:
+        - models

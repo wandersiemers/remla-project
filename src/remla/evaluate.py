@@ -1,4 +1,4 @@
-import glob
+import argparse
 from typing import Dict, Type
 
 import numpy as np
@@ -81,24 +81,37 @@ def print_words_for_tag(
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Evaluate a trained machine learning model on processed data from the data pipeline"
+    )
+    parser.add_argument(
+        "-jfp",
+        "--joblib-file-path",
+        help="Path to Joblib file containing the model class",
+        required=True,
+    )
+    args = parser.parse_args()
+
+    joblib_file_path: str = args.joblib_file_path
+
     _, _, X_val, y_val, _ = read_files("processed")
 
-    for model_filename in glob.glob("assets/models/*.joblib"):
-        classifier_name = model_filename.split("/")[-1].split(".")[0]
-        classifier: Type[BaseModel] = load(model_filename)
+    classifier: Type[BaseModel] = load(joblib_file_path)
 
-        log_evaluation_scores(
-            classifier.get_labels(y_val), classifier.predict(X_val), classifier_name
-        )
+    classifier_name: str = classifier.__class__.__name__
 
-        if classifier_name == "tfidf_classifier":
-            for tag in ["c", "c++", "linux"]:
-                print_words_for_tag(
-                    classifier._classifier,
-                    tag,
-                    classifier._mlb.classes,
-                    classifier.tfidf_reversed_vocab,
-                )
+    log_evaluation_scores(
+        classifier.get_labels(y_val), classifier.predict(X_val), classifier_name
+    )
+
+    if classifier_name == "TfIdfModel":
+        for tag in ["c", "c++", "linux"]:
+            print_words_for_tag(
+                classifier._classifier,
+                tag,
+                classifier._mlb.classes,
+                classifier.tfidf_reversed_vocab,
+            )
 
 
 if __name__ == "__main__":
