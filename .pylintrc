@@ -11,6 +11,8 @@ disable=
 
 good-names=x,y,z,i,j,k
 
+max-line-length=88
+
 [MESSAGES CONTROL]
 
 # Flags for dslinter

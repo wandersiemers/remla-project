@@ -50,10 +50,10 @@ class BagModel(BaseModel):
     def get_features(self, X: list[str]):
         return _sparse_bag_of_words(X, self._words_to_index, self._dict_size)
 
-    def get_labels(self, y: list[str]):
+    def get_labels(self, y: list[list[str]]):
         return self._mlb.fit_transform(y)
 
-    def train(self, X_train: list[str], y_train: list[str]):
+    def train(self, X_train: list[str], y_train: list[list[str]]):
         word_counts, tags_counts = get_corpus_counts(X_train, y_train)
         classes = tags_counts.keys()
 
