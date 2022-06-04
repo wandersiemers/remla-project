@@ -1,0 +1,35 @@
+name: Check import order using isort
+
+on:
+  push:
+    paths:
+      - "**.py"
+      - .github/workflows/import-order-check.yml
+    branches: [ main ]
+  pull_request:
+    paths:
+      - "**.py"
+      - .github/workflows/import-order-check.yml
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+
+jobs:
+  lint-ds:
+    runs-on: ubuntu-latest
+    name: Imports
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python environment
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9.12
+
+    - name: Install isort
+      run: |
+        pip install isort
+        
+    - name: Check import order using isort
+      run: |
+        isort --skip-gitignore --check-only --diff .
