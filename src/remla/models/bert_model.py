@@ -8,7 +8,6 @@ from transformers import (DistilBertTokenizer,
                           TrainingArguments)
 from torch.utils.data import Dataset, DataLoader
 from sklearn.preprocessing import MultiLabelBinarizer
-from transformers import
 
 from remla.models.base_model import BaseModel
 from remla.utils import get_corpus_counts
@@ -66,7 +65,7 @@ class BertBasedModel(BaseModel):
                                        self.get_labels(y_train)[:1000],
                                        self.tokenizer)
         dataset.to_device(self.device)
-        training_args = TrainingArguments(output_dir="test_trainer")
+        training_args = TrainingArguments(output_dir="test_trainer", report_to="wandb")
 
         trainer = Trainer(
             model=self.model,
