@@ -1,8 +1,10 @@
 import argparse
 import importlib
 import os
+import wandb
 from typing import Type
 
+from remla.config import wandb_entity, wandb_project_name
 from remla.data.pre_processing import read_files
 from remla.models.base_model import BaseModel
 
@@ -19,6 +21,13 @@ def main():
 
     model_name: str = args.model_name
     module_name: str = args.module_name
+
+    wandb.init(
+        project=wandb_project_name,
+        entity=wandb_entity,
+        tags=["Train"],
+        config={"Model": model_name},
+    )
 
     X_train, y_train, _, _, _ = read_files("processed")
 

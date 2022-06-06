@@ -7,3 +7,6 @@ models:
   - module: tfidf_model
     class: TfIdfModel
     config: tfidf_model_config
+  - module: bert_model
+    class: BertBasedModel
+    config: bert_model_config
