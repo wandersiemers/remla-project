@@ -1,0 +1,57 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/data/preprocessing.py
+    deps:
+    - path: assets/data/raw
+      md5: d187e13a5b048b30d8132ca1ba170ed8.dir
+      size: 10408830
+      nfiles: 4
+    - path: src/data/preprocessing.py
+      md5: 0dfe02014a832ae2a12af24d088c477a
+      size: 1894
+    outs:
+    - path: assets/data/processed
+      md5: 5c7922ffed55407cd8c9ab62c812b2c1.dir
+      size: 8925018
+      nfiles: 3
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: assets/data/processed
+      md5: 5c7922ffed55407cd8c9ab62c812b2c1.dir
+      size: 8925018
+      nfiles: 3
+    - path: src/train.py
+      md5: 900ec823bc639d4a51abea0afd592e9a
+      size: 2434
+    outs:
+    - path: assets/models
+      md5: 9862e495b93c894c9047bd174227c74a.dir
+      size: 14672034
+      nfiles: 2
+    - path: assets/outputs
+      md5: fe47715e0d96dc3334b3e525131feec4.dir
+      size: 36305247
+      nfiles: 4
+  evaluate:
+    cmd: python src/model/evaluate.py
+    deps:
+    - path: assets/models
+      md5: 9862e495b93c894c9047bd174227c74a.dir
+      size: 14672034
+      nfiles: 2
+    - path: assets/outputs
+      md5: fe47715e0d96dc3334b3e525131feec4.dir
+      size: 36305247
+      nfiles: 4
+    - path: src/model/evaluate.py
+      md5: 20780ab80e55c50160016ef71b3c5ea3
+      size: 3383
+    outs:
+    - path: assets/metrics/bag-of-words_metrics.json
+      md5: 4b341f114e38dcb79f3170f6195bac14
+      size: 111
+    - path: assets/metrics/tf-idf_metrics.json
+      md5: 73ae0a27beff73c5a8597ef716082d28
+      size: 113
