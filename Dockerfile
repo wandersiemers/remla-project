@@ -1,12 +1,12 @@
-FROM python:3.9.13-slim
+FROM python:3.9.12-slim
 
 WORKDIR /root/
 
 COPY requirements.txt .
 
-RUN mkdir output &&\
-	python -m pip install --upgrade pip &&\
-	pip install -r requirements.txt
+RUN mkdir output
+RUN python -m pip install --upgrade pip
+RUN pip install -r requirements.txt
 
 COPY src src
 COPY data data
