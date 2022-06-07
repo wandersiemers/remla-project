@@ -65,7 +65,11 @@ class BertBasedModel(BaseModel):
                                        self.get_labels(y_train)[:1000],
                                        self.tokenizer)
         dataset.to_device(self.device)
-        training_args = TrainingArguments(output_dir="test_trainer", report_to="wandb")
+        training_args = TrainingArguments(output_dir="test_trainer",
+                                          logging_strategy="steps",
+                                          logging_steps=10,
+                                          do_eval=False,
+                                          report_to="wandb")
 
         trainer = Trainer(
             model=self.model,
