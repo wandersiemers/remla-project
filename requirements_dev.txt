@@ -6,6 +6,8 @@ pylint
 docformatter
 black
 pytest
+bandit
+isort
 dvc
 dvc[gdrive]
 tensorflow-data-validation
