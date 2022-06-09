@@ -10,3 +10,4 @@ bandit
 isort
 dvc
 dvc[gdrive]
+tensorflow-data-validation
