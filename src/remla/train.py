@@ -25,8 +25,8 @@ def main():
     wandb.init(
         project=wandb_project_name,
         entity=wandb_entity,
-        tags=["Train"],
-        config={"Model": model_name},
+        tags=["training"],
+        config={"model": model_name},
     )
 
     X_train, y_train, _, _, _ = read_files("processed")

@@ -18,8 +18,8 @@ def log_evaluation_scores(
     wandb.init(
         project=wandb_project_name,
         entity=wandb_entity,
-        tags=["model"],
-        config={"classifier": classifier_name},
+        tags=["evaluation"],
+        config={"model": classifier_name},
     )
 
     accuracy = accuracy_score(y_val, predicted)
