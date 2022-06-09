@@ -11,7 +11,7 @@ stages:
     do:
       cmd: python src/remla/train.py --module-name="remla.models.${item.module}" --model-name="${item.class}"
       deps:
-      - assets/data/processed
+      - assets/data/processed/train.tsv
       - src/remla/train.py
       - src/remla/models/${item.module}.py
       params:
@@ -23,7 +23,7 @@ stages:
     do:
       cmd: python src/remla/evaluate.py --joblib-file-path="assets/models/${item.class}.joblib"
       deps:
-      - assets/data/processed
+      - assets/data/processed/validation.tsv
       - src/remla/evaluate.py
       - assets/models/${item.class}.joblib
       params:

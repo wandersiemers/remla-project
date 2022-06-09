@@ -10,3 +10,4 @@ models:
   - module: bert_model
     class: BertBasedModel
     config: bert_model_config
+  
