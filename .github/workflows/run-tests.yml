@@ -18,13 +18,9 @@ jobs:
       with:
         python-version: 3.9.12
 
-    - name: Install Dependencies
+    - name: Install (Development) Dependencies
       run: |
-        pip install -r requirements.txt
-
-    - name: Install Development Dependencies
-      run: |
-        pip install -r requirements_dev.txt
+        pip install -e .
         
     - name: Run tests using pytest
       run: |

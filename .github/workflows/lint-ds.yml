@@ -30,9 +30,9 @@ jobs:
       run: |
         pip install dslinter
 
-    - name: Install Dependencies
+    - name: Install (Development) Dependencies
       run: |
-        pip install .
+        pip install -e .
         
     - name: Lint using dslinter
       run: |
