@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: remla
+  name: remla-hpa
   namespace: remla
   labels:
     app: remla
