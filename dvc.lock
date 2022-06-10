@@ -170,7 +170,7 @@ stages:
       md5: 069627fc5256afa7b7da9e1ad2519f80
       size: 268815517
   validate:
-    cmd: python src/remla/data/validate_schema.py
+    cmd: python src/remla/data/validate_schema.py && touch anomalies_done
     deps:
     - path: assets/data/raw
       md5: 3d9e62a9c241fcfcf634384a95dd4cf4.dir
@@ -179,3 +179,7 @@ stages:
     - path: src/remla/data/validate_schema.py
       md5: 5477953901565b75fd3be3ac59679c91
       size: 772
+    outs:
+    - path: anomalies_done
+      md5: d41d8cd98f00b204e9800998ecf8427e
+      size: 0
