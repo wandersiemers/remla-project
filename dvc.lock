@@ -10,6 +10,9 @@ stages:
     - path: src/remla/data/pre_processing.py
       md5: a65cc7b93dd5385dd1eca7b5dc6af8e5
       size: 2488
+    - path: src/remla/data/pre_processing.py
+      md5: a65cc7b93dd5385dd1eca7b5dc6af8e5
+      size: 2488
     outs:
     - path: assets/data/processed
       md5: b156d4529d249d92fb467e287ae44c83.dir
@@ -69,16 +72,15 @@ stages:
   train@1:
     cmd: python src/remla/train.py --module-name="remla.models.tfidf_model" --model-name="TfIdfModel"
     deps:
-    - path: assets/data/processed
-      md5: b156d4529d249d92fb467e287ae44c83.dir
-      size: 8775027
-      nfiles: 3
+    - path: assets/data/processed/train.tsv
+      md5: 1af83773d2ea847814e40755915d13db
+      size: 6110449
     - path: src/remla/models/tfidf_model.py
-      md5: c851c3104a336177d500d187a68c95d5
-      size: 2088
+      md5: ffe58dba71bf4d7461890a3e2de72cf2
+      size: 2013
     - path: src/remla/train.py
-      md5: 57fd3c263393fab203d01a81fc940225
-      size: 1052
+      md5: f81e03d17924e156c6fb99585b14d249
+      size: 1276
     params:
       params.yaml:
         models:
@@ -88,9 +90,12 @@ stages:
         - module: tfidf_model
           class: TfIdfModel
           config: tfidf_model_config
+        - module: bert_model
+          class: BertBasedModel
+          config: bert_model_config
     outs:
     - path: assets/models/TfIdfModel.joblib
-      md5: 294863d932f0179d5c8d8a2caaa7449c
+      md5: 0587b5bb5a332c527b42eca350d1dfe4
       size: 20208282
   evaluate@0:
     cmd: python src/remla/evaluate.py --joblib-file-path="assets/models/BagModel.joblib"
@@ -136,3 +141,41 @@ stages:
         - module: tfidf_model
           class: TfIdfModel
           config: tfidf_model_config
+  train@2:
+    cmd: python src/remla/train.py --module-name="remla.models.bert_model" --model-name="BertBasedModel"
+    deps:
+    - path: assets/data/processed/train.tsv
+      md5: 1af83773d2ea847814e40755915d13db
+      size: 6110449
+    - path: src/remla/models/bert_model.py
+      md5: b50ae7dc2ca4faf374a37cc4ea87d36b
+      size: 3262
+    - path: src/remla/train.py
+      md5: f81e03d17924e156c6fb99585b14d249
+      size: 1276
+    params:
+      params.yaml:
+        models:
+        - module: bag_model
+          class: BagModel
+          config: bag_model_config
+        - module: tfidf_model
+          class: TfIdfModel
+          config: tfidf_model_config
+        - module: bert_model
+          class: BertBasedModel
+          config: bert_model_config
+    outs:
+    - path: assets/models/BertBasedModel.joblib
+      md5: 069627fc5256afa7b7da9e1ad2519f80
+      size: 268815517
+  validate:
+    cmd: python src/remla/data/validate_schema.py
+    deps:
+    - path: assets/data/raw
+      md5: 3d9e62a9c241fcfcf634384a95dd4cf4.dir
+      size: 10408878
+      nfiles: 4
+    - path: src/remla/data/validate_schema.py
+      md5: 5477953901565b75fd3be3ac59679c91
+      size: 772

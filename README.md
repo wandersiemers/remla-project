@@ -4,7 +4,7 @@ This project is used a starting point for the course [*Release Engineering for M
 
 ## Installation
 
-Run: `pip install -e .`
+Run: `pip install -e .[extra]`
 
 ## Implementation
 

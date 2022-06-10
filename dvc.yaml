@@ -1,4 +1,9 @@
 stages:
+  validate:
+    cmd: python src/remla/data/validate_schema.py
+    deps:
+      - assets/data/raw
+      - src/remla/data/validate_schema.py
   prepare:
     cmd: python src/remla/data/pre_processing.py
     deps:
