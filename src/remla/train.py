@@ -1,9 +1,9 @@
 import argparse
 import importlib
 import os
-import wandb
 from typing import Type
 
+import wandb
 from remla.config import wandb_entity, wandb_project_name
 from remla.data.pre_processing import read_files
 from remla.models.base_model import BaseModel
