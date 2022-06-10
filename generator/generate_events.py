@@ -12,9 +12,7 @@ def run():
     while True:
         try:
             target = random.choice(endpoints)
-            json = {
-                'title': 'Dependency injection in Spring'
-            }
+            json = {"title": "Dependency injection in Spring"}
             requests.post(HOST + target, timeout=1, json=json)
         except requests.RequestException:
             print("cannot connect", HOST)
