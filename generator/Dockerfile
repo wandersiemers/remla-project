@@ -4,9 +4,6 @@ COPY requirements.txt /tmp/requirements.txt
 
 RUN pip install -r /tmp/requirements.txt --no-cache-dir
 
-COPY src /var/server/src
-COPY assets /var/server/assets
+COPY generate_events.py /var/app/generate_events.py
 
-WORKDIR /var/server
-
-CMD python /var/server/src/serve_model.py
+CMD python /var/app/generate_events.py

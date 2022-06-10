@@ -1,5 +1,6 @@
 from typing import Dict
 
+from joblib import dump
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
@@ -27,5 +28,7 @@ def tfidf_features(X_train: list[str], X_val: list[str], X_test: list[str]):
     X_test = tfidf_vectorizer.transform(X_test)
 
     vocabulary: Dict[str, int] = tfidf_vectorizer.vocabulary_
+
+    dump(tfidf_vectorizer, "assets/outputs/tfidf-vectorizer.joblib")
 
     return X_train, X_val, X_test, vocabulary

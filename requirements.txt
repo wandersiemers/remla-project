@@ -4,3 +4,7 @@ nltk==3.6.1
 scipy==1.8.1
 scikit-learn==1.1.1
 joblib==1.1.0
+flask==2.1.2
+prometheus_flask_exporter==0.20.1
+flasgger==0.9.5
+
