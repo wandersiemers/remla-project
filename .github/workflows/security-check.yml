@@ -31,5 +31,6 @@ jobs:
         pip install bandit
         
     - name: Check security issues using Bandit
+      # --skip B101 is used to ignore warnings about usage of assert
       run: |
-        bandit -r .
+        bandit --skip B101 -r .
