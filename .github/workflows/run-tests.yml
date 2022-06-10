@@ -18,9 +18,13 @@ jobs:
       with:
         python-version: 3.9.12
 
-    - name: Install (Development) Dependencies
+    - name: Install PyTest
       run: |
-        pip install -e .
+        pip install pytest
+
+    - name: Install Dependencies
+      run: |
+        pip install .
         
     - name: Run tests using pytest
       run: |
