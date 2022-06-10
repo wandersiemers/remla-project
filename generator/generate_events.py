@@ -4,7 +4,7 @@ import time
 
 import requests
 
-endpoints = ("predict", "dumb_predict")
+endpoints = ["predict"]
 HOST = "http://app:5000/"
 
 
