@@ -13,7 +13,7 @@ from remla.models.base_model import BaseModel
 
 
 def log_evaluation_scores(
-    y_val: np.ndarray, predicted: np.ndarray, classifier_name: str
+        y_val: np.ndarray, predicted: np.ndarray, classifier_name: str
 ):
     wandb.init(
         project=wandb_project_name,
@@ -41,10 +41,10 @@ def log_evaluation_scores(
 
 
 def print_words_for_tag(
-    classifier: BaseEstimator,
-    tag: str,
-    tags_classes: list,
-    index_to_words: Dict[int, str],
+        classifier: BaseEstimator,
+        tag: str,
+        tags_classes: list,
+        index_to_words: Dict[int, str],
 ):
     """
     Print top 5 positive and top 5 negative words for current tag
@@ -82,7 +82,7 @@ def print_words_for_tag(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Evaluate a trained machine learning model on processed data from the data pipeline"
+        description="Evaluate a trained machine learning model on processed data from the data pipeline"  # noqa
     )
     parser.add_argument(
         "-jfp",

@@ -12,7 +12,7 @@ from remla.models.base_model import BaseModel
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Train a machine learning model on processed data from the data pipeline"
+        description="Train a machine learning model on processed data from the data pipeline"  # noqa: E731
     )
     parser.add_argument("-mdl", "--model-name", help="Name of the model", required=True)
     parser.add_argument(

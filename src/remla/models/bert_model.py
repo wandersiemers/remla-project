@@ -1,4 +1,4 @@
-from typing import Any, Dict, T_co
+from typing import Any, Dict
 
 import torch
 import tqdm
@@ -28,7 +28,7 @@ class StackOverflowDataset(Dataset):
         )
         self.labels = torch.Tensor(y_train)
 
-    def __getitem__(self, index) -> T_co:
+    def __getitem__(self, index) -> Any:
         item = {key: val[index] for key, val in self.encodings.items()}
         item["labels"] = self.labels[index]
         return item
