@@ -9,4 +9,4 @@ COPY assets /var/server/assets
 
 WORKDIR /var/server
 
-CMD python /var/server/src/serve_model.py
+CMD python /var/server/src/remla/serve_model.py

@@ -25,5 +25,5 @@ for schema_name, data_name in data_and_schema_names:
     current_anomalies = get_anomalies(
         data_name, f"assets/data/{schema_name}_schema.pbtxt"
     )
-    
+
     assert not current_anomalies.anomaly_info

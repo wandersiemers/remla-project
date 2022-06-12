@@ -6,7 +6,7 @@ from flasgger import Swagger
 from flask import Flask, jsonify, request
 from prometheus_flask_exporter import PrometheusMetrics
 
-from data.preprocessing import text_prepare
+from remla.data.pre_processing import text_prepare
 
 app = Flask(__name__)
 Swagger(app)
