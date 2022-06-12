@@ -24,7 +24,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        pip install remla-project[test]
+        pip install .[test]
         
     - name: Run tests using pytest
       run: |
