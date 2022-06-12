@@ -15,7 +15,7 @@ class TfIdfModel(BaseModel[list[str], list[list[str]]]):
     def __init__(self, logging: bool, config: Dict[str, Any]):
         BaseModel.__init__(self, logging)
 
-        self._tfidf_vectorizer = TfidfVectorizer(
+        self._tfidf_vectorizer = TfidfVectorizer(  # nosec
             min_df=5, max_df=0.9, ngram_range=(1, 2), token_pattern=r"(\S+)"
         )
 
