@@ -2,11 +2,11 @@ import argparse
 from typing import Dict, Type
 
 import numpy as np
+import wandb
 from joblib import load
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score, average_precision_score, f1_score
 
-import wandb
 from remla.config import wandb_entity, wandb_project_name
 from remla.data.pre_processing import read_files
 from remla.models.base_model import BaseModel

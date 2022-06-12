@@ -5,9 +5,8 @@ from ast import literal_eval
 import nltk
 import numpy as np
 import pandas as pd
-from nltk.corpus import stopwords
-
 import wandb
+from nltk.corpus import stopwords
 
 from remla.config import wandb_entity, wandb_project_name
 
