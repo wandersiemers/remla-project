@@ -27,8 +27,18 @@ def main():
         project=wandb_project_name,
         entity=wandb_entity,
         tags=["training"],
-        config={"model": model_name},
+        config={"model_name": model_name},
     )
+
+    raw_data = wandb.Artifact(
+        "stack-overflow-raw", type="dataset",
+        description="Raw stackoverflow titles and corresponding tags",
+    )
+
+    raw_data.add_dir("assets/data/raw", name="raw")
+
+    wandb.run.log_code()
+    wandb.run.log_artifact(raw_data)
 
     X_train, y_train, _, _, _ = read_files("processed")
 
@@ -43,6 +53,12 @@ def main():
 
     model.train(X_train, y_train)
     model.save(f"assets/models/{model_name}.joblib")
+
+    trained_model_artifact = wandb.Artifact(
+        model_name, type="model"
+    )
+    trained_model_artifact.add_file(f"assets/models/{model_name}.joblib")
+    wandb.run.log_artifact(trained_model_artifact)
 
 
 if __name__ == "__main__":

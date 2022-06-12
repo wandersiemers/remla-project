@@ -19,7 +19,7 @@ def log_evaluation_scores(
         project=wandb_project_name,
         entity=wandb_entity,
         tags=["evaluation"],
-        config={"model": classifier_name},
+        config={"model_name": classifier_name},
     )
 
     accuracy = accuracy_score(y_val, predicted)
@@ -95,6 +95,8 @@ def main():
     joblib_file_path: str = args.joblib_file_path
 
     _, _, X_val, y_val, _ = read_files("processed")
+
+    X_val, y_val = X_val[:5000], y_val[:5000]
 
     classifier: Type[BaseModel] = load(joblib_file_path)
 

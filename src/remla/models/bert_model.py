@@ -90,14 +90,16 @@ class BertBasedModel(BaseModel):
         trainer.train()
 
     def predict(self, X_test: list[str]):
+        self.model.eval()
         y_pred = []
         dataset = StackOverflowDataset(
             X_train=X_test, y_train=[0 for _ in X_test], tokenizer=self.tokenizer
         )
         dataset.to_device(self.device)
 
-        loader = DataLoader(dataset, batch_size=64, shuffle=True)
-        for batch in tqdm.tqdm(loader):
-            outputs = self.model(batch["input_ids"])
-            y_pred.extend((outputs.logits > 0).float().cpu().numpy())
+        loader = DataLoader(dataset, batch_size=64)
+        with torch.no_grad():
+            for batch in tqdm.tqdm(loader):
+                outputs = self.model(batch["input_ids"])
+                y_pred.extend((torch.sigmoid(outputs.logits) > 0.15).float().cpu().numpy())
         return y_pred
