@@ -181,7 +181,7 @@ stages:
       size: 10408830
       nfiles: 4
     - path: src/remla/data/validate_schema.py
-      md5: 4d580681adeb7c080208edd3c1e33747
+      md5: f79cd80e1cec9982510bbbd3e8c9cdc4
       size: 923
     outs:
     - path: assets/outputs/anomalies.txt

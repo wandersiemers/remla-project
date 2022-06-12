@@ -51,6 +51,8 @@ def main():
 
     model = Model(True, {})
 
+    wandb.config.update(model.config if model.config else {})
+
     model.train(X_train, y_train)
     model.save(f"assets/models/{model_name}.joblib")
 
