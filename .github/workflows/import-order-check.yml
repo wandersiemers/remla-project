@@ -26,9 +26,9 @@ jobs:
       with:
         python-version: 3.9.12
 
-    - name: Install isort
+    - name: Install isort (and black for black + isort configuration)
       run: |
-        pip install isort
+        pip install isort black
         
     - name: Check import order using isort
       run: |
