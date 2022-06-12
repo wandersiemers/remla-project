@@ -12,9 +12,7 @@ app = Flask(__name__)
 Swagger(app)
 PrometheusMetrics(app)
 
-vectorizer = joblib.load("assets/outputs/tfidf-vectorizer.joblib")
-model = joblib.load("assets/models/classifier_tfidf.joblib")
-mlb_classifier = joblib.load("assets/models/mlb_classifier.joblib")
+model = joblib.load("assets/models/TfIdfModel.joblib")
 
 
 @app.route("/predict", methods=["POST"])
@@ -22,8 +20,8 @@ def predict():
     input_data = request.get_json()
     title = input_data.get("title")
     processed_title = text_prepare(title)
-    prediction = model.predict(vectorizer.transform([processed_title]))
-    result = mlb_classifier.inverse_transform(prediction)
+    prediction = model.predict([processed_title])
+    result = model._mlb.inverse_transform(prediction)
 
     return jsonify(
         {"result": result, "classifier": "logistic classifier", "title": title}

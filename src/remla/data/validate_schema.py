@@ -21,9 +21,10 @@ data_and_schema_names: List[Tuple[str, str]] = [
     ("test", "test"),
 ]
 
-for schema_name, data_name in data_and_schema_names:
-    current_anomalies = get_anomalies(
-        data_name, f"assets/data/{schema_name}_schema.pbtxt"
-    )
-
-    assert not current_anomalies.anomaly_info
+with open('assets/outputs/anomalies.txt', 'w') as f:
+    for schema_name, data_name in data_and_schema_names:
+        current_anomalies = get_anomalies(
+            data_name, f"assets/data/{schema_name}_schema.pbtxt"
+        )
+        f.write(str(current_anomalies.anomaly_info))
+        assert not current_anomalies.anomaly_info
