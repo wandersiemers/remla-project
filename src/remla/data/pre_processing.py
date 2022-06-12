@@ -8,7 +8,10 @@ import pandas as pd
 from nltk.corpus import stopwords
 
 import wandb
+
 from remla.config import wandb_entity, wandb_project_name
+
+nltk.download("stopwords")
 
 
 def read_data(filename: str):
@@ -63,8 +66,6 @@ def main():
         entity=wandb_entity,
         tags=["data"],
     )
-
-    nltk.download("stopwords")
 
     X_train, y_train, X_val, y_val, X_test = read_files("raw")
 
