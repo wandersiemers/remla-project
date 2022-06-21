@@ -1,35 +1,10 @@
-# StackOverflow post tag prediction using ML
+# REMLA 2022 Group 8
 
 This project was conducted as part of the course [*Release Engineering for Machine Learning Applications* (REMLA)] taught at the Delft University of Technology by [Prof. Luís Cruz] and [Prof. Sebastian Proksch].
 
 ## Installation
 
 Run: `pip install -e .[extra]`
-
-## Implementation
-
-### Multilabel classification on Stack Overflow tags
-Predict tags for posts from StackOverflow with multilabel classification approach.
-
-#### Dataset
-- Dataset of post titles from StackOverflow
-
-#### Transforming text to a vector
-- Transformed text data to numeric vectors using bag-of-words and TF-IDF.
-
-#### MultiLabel classifier
-[MultiLabelBinarizer](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MultiLabelBinarizer.html) to transform labels in a binary form and the prediction will be a mask of 0s and 1s.
-
-[Logistic Regression](http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html) for Multilabel classification
-- Coefficient = 10
-- L2-regularization technique
-
-#### Evaluation
-Results evaluated using several classification metrics:
-- [Accuracy](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html)
-- [F1-score](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
-
-Note: this sample project was originally created by @partoftheorigin
 
 ## Linting
 
@@ -39,6 +14,28 @@ Find the commands per tool below:
 - `flake8`: `flake8 .`
 - `pylint`: `pylint src && pylint tests`
 - `mypy`: `mypy .`
+
+## Experiment tracking with Weights and Biases
+
+Loging to Weights and Biases using the CLI tool:
+
+`wandb login`
+
+Run the code and the results will be logged to wandb. Note that you need to be part of the `remla-2022-group-8` entity to have access to already pushed artifacts. Contact one of the authors to be added to the organization. 
+
+## Reproducibility pipeline
+
+To add a new model to the DVC reproducibility pipeline, add a class that extends `BaseModel` in the `models` package.
+
+Add the name of the module, the name of the class and a config name in the `params.yaml` file. Note: the `config` field is not used right now.
+
+## Grafana Dashboard
+
+Build the service located in the root of the repository:
+`docker-compose build .`
+
+Run the service:
+`docker-compose up`
 
 ## Kubernetes
 ### Setup
