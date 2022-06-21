@@ -32,7 +32,7 @@ Add the name of the module, the name of the class and a config name in the `para
 ## Grafana Dashboard
 
 Build the service located in the root of the repository:
-`docker-compose build .`
+`docker-compose build `
 
 Run the service:
 `docker-compose up`
