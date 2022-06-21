@@ -1,6 +1,6 @@
 # StackOverflow post tag prediction using ML
 
-This project is used a starting point for the course [*Release Engineering for Machine Learning Applications* (REMLA)] taught at the Delft University of Technology by [Prof. Luís Cruz] and [Prof. Sebastian Proksch].
+This project was conducted as part of the course [*Release Engineering for Machine Learning Applications* (REMLA)] taught at the Delft University of Technology by [Prof. Luís Cruz] and [Prof. Sebastian Proksch].
 
 ## Installation
 
@@ -28,20 +28,8 @@ Predict tags for posts from StackOverflow with multilabel classification approac
 Results evaluated using several classification metrics:
 - [Accuracy](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html)
 - [F1-score](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html)
-- [Area under ROC-curve](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html)
-- [Area under precision-recall curve](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html#sklearn.metrics.average_precision_score)
-
-#### Libraries
-- [Numpy](http://www.numpy.org/) — a package for scientific computing.
-- [Pandas](https://pandas.pydata.org/) — a library providing high-performance, easy-to-use data structures and data analysis tools for the Python
-- [scikit-learn](http://scikit-learn.org/stable/index.html) — a tool for data mining and data analysis.
-- [NLTK](http://www.nltk.org/) — a platform to work with natural language.
 
 Note: this sample project was originally created by @partoftheorigin
-
-## Project setup
-
-Create a virtual environment and install both the `requirements.txt` and the `requirements_dev.txt`.
 
 ## Linting
 
