@@ -7,11 +7,10 @@ import numpy as np
 import pandas as pd
 from nltk.corpus import stopwords
 
-nltk.download("stopwords")
+import wandb
+from remla.config import wandb_entity, wandb_project_name
 
-REPLACE_BY_SPACE_RE = re.compile(r"[/(){}\[\]\|@,;]")
-BAD_SYMBOLS_RE = re.compile(r"[^0-9a-z #+_]")
-STOP_WORDS = set(stopwords.words("english"))
+nltk.download("stopwords")
 
 
 def read_data(filename: str):
@@ -22,10 +21,14 @@ def read_data(filename: str):
 
 
 def text_prepare(text: str):
+    replace_by_space_re = re.compile(r"[/(){}\[\]\|@,;]")
+    bad_symbols_re = re.compile(r"[^0-9a-z #+_]")
+    stop_words = set(stopwords.words("english"))
+
     text = text.lower()
-    text = re.sub(REPLACE_BY_SPACE_RE, " ", text)
-    text = re.sub(BAD_SYMBOLS_RE, "", text)
-    text = " ".join([word for word in text.split() if word not in STOP_WORDS])
+    text = re.sub(replace_by_space_re, " ", text)
+    text = re.sub(bad_symbols_re, "", text)
+    text = " ".join([word for word in text.split() if word not in stop_words])
 
     return text
 
@@ -57,6 +60,12 @@ def read_files(directory: str):
 
 
 def main():
+    wandb.init(
+        project=wandb_project_name,
+        entity=wandb_entity,
+        tags=["data"],
+    )
+
     X_train, y_train, X_val, y_val, X_test = read_files("raw")
 
     X_train = [text_prepare(x) for x in X_train]
@@ -68,6 +77,14 @@ def main():
     write_to_file(X_train, y_train, "train.tsv")
     write_to_file(X_val, y_val, "validation.tsv")
     write_to_file(X_test)
+
+    y_train_labels = np.concatenate(y_train)
+    y_val_labels = np.concatenate(y_val)
+    classes = set(np.concatenate((y_train_labels, y_val_labels)))
+
+    wandb.sklearn.plot_class_proportions(y_train_labels, y_val_labels, classes)
+
+    wandb.finish()
 
 
 if __name__ == "__main__":

@@ -26,9 +26,13 @@ jobs:
       with:
         python-version: 3.9.12
 
+    - name: Install Dependencies
+      run: |
+        pip install .
+
     - name: Install isort
       run: |
-        pip install isort
+        pip install isort black
         
     - name: Check import order using isort
       run: |

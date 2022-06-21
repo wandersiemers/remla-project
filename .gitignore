@@ -133,3 +133,12 @@ dmypy.json
 .pyre/
 
 .DS_STORE
+
+# Weights and Biases
+wandb
+
+# Transformers trainer output
+test_trainer
+
+# Hacky fix for DVC to depend on stage with no output
+anomalies_done

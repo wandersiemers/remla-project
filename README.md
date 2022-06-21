@@ -2,6 +2,10 @@
 
 This project is used a starting point for the course [*Release Engineering for Machine Learning Applications* (REMLA)] taught at the Delft University of Technology by [Prof. Luís Cruz] and [Prof. Sebastian Proksch].
 
+## Installation
+
+Run: `pip install -e .[extra]`
+
 ## Implementation
 
 ### Multilabel classification on Stack Overflow tags
@@ -45,7 +49,7 @@ Find the commands per tool below:
 
 - `mllint`: `mllint .`
 - `flake8`: `flake8 .`
-- `pylint`: `pylint .`
+- `pylint`: `pylint src && pylint tests`
 - `mypy`: `mypy .`
 
 [*Release Engineering for Machine Learning Applications* (REMLA)]: https://se.ewi.tudelft.nl/remla/ 

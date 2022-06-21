@@ -1,16 +1,4 @@
-import pandas as pd
-
-from src.model import preprocessing
-
-
-def test_read_file():
-    train = preprocessing.read_data("./data/train.tsv")
-    validation = preprocessing.read_data("data/validation.tsv")
-    test = pd.read_csv("data/test.tsv", sep="\t")
-
-    assert train.empty is False
-    assert validation.empty is False
-    assert test.empty is False
+from remla.data import pre_processing
 
 
 def test_text_prepare():
@@ -25,7 +13,7 @@ def test_text_prepare():
     ]
 
     for ex, ans in zip(examples, answers):
-        if preprocessing.text_prepare(ex) != ans:
+        if pre_processing.text_prepare(ex) != ans:
             return f"Wrong answer for the case: '{ex}'"
 
     return "Basic tests are passed."

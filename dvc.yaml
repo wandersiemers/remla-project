@@ -1,27 +1,38 @@
 stages:
-  prepare:
-    cmd: python src/data/preprocessing.py
+  validate:
+    cmd: python src/remla/data/validate_schema.py
     deps:
     - assets/data/raw
-    - src/data/preprocessing.py
+    - src/remla/data/validate_schema.py
+    outs:
+    - assets/outputs/anomalies.txt
+  prepare:
+    cmd: python src/remla/data/pre_processing.py
+    deps:
+    - assets/data/raw
+    - assets/outputs/anomalies.txt
+    - src/remla/data/pre_processing.py
     outs:
     - assets/data/processed
   train:
-    cmd: python src/train.py
-    deps:
-    - assets/data/processed
-    - src/train.py
-    outs:
-    - assets/models
-    - assets/outputs
+    foreach: ${models}
+    do:
+      cmd: python src/remla/train.py --module-name="remla.models.${item.module}" --model-name="${item.class}"
+      deps:
+      - assets/data/processed/train.tsv
+      - src/remla/train.py
+      - src/remla/models/${item.module}.py
+      params:
+      - models
+      outs:
+      - assets/models/${item.class}.joblib
   evaluate:
-    cmd: python src/model/evaluate.py
-    deps:
-    - assets/models
-    - assets/outputs
-    - src/model/evaluate.py
-    metrics:
-    - assets/metrics/bag-of-words_metrics.json:
-        cache: false
-    - assets/metrics/tf-idf_metrics.json:
-        cache: false
+    foreach: ${models}
+    do:
+      cmd: python src/remla/evaluate.py --joblib-file-path="assets/models/${item.class}.joblib"
+      deps:
+      - assets/data/processed/validation.tsv
+      - src/remla/evaluate.py
+      - assets/models/${item.class}.joblib
+      params:
+      - models

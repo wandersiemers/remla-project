@@ -1,4 +1,4 @@
-from src.model import bag_of_words
+from remla.models.bag_model import bag_of_words
 
 
 def test_bag_of_words():
@@ -7,7 +7,7 @@ def test_bag_of_words():
     answers = [[1, 1, 0, 1]]
 
     for ex, ans in zip(examples, answers):
-        if (bag_of_words.bag_of_words(ex, words_to_index, 4) != ans).any():
+        if (bag_of_words(ex, words_to_index, 4) != ans).any():
             return f"Wrong answer for the case: '{ex}'"
 
     return "Basic tests are passed."
