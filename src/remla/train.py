@@ -4,7 +4,6 @@ import os
 from typing import Type
 
 import wandb
-
 from remla.config import wandb_entity, wandb_project_name
 from remla.data.pre_processing import read_files
 from remla.models.base_model import BaseModel
@@ -31,7 +30,8 @@ def main():
     )
 
     raw_data = wandb.Artifact(
-        "stack-overflow-raw", type="dataset",
+        "stack-overflow-raw",
+        type="dataset",
         description="Raw stackoverflow titles and corresponding tags",
     )
 
@@ -56,9 +56,7 @@ def main():
     model.train(X_train, y_train)
     model.save(f"assets/models/{model_name}.joblib")
 
-    trained_model_artifact = wandb.Artifact(
-        model_name, type="model"
-    )
+    trained_model_artifact = wandb.Artifact(model_name, type="model")
     trained_model_artifact.add_file(f"assets/models/{model_name}.joblib")
     wandb.run.log_artifact(trained_model_artifact)
 

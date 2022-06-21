@@ -2,18 +2,18 @@ import argparse
 from typing import Dict, Type
 
 import numpy as np
-import wandb
 from joblib import load
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score, average_precision_score, f1_score
 
+import wandb
 from remla.config import wandb_entity, wandb_project_name
 from remla.data.pre_processing import read_files
 from remla.models.base_model import BaseModel
 
 
 def log_evaluation_scores(
-        y_val: np.ndarray, predicted: np.ndarray, classifier_name: str
+    y_val: np.ndarray, predicted: np.ndarray, classifier_name: str
 ):
     accuracy = accuracy_score(y_val, predicted)
     f1 = f1_score(y_val, predicted, average="weighted")
@@ -34,10 +34,10 @@ def log_evaluation_scores(
 
 
 def print_words_for_tag(
-        classifier: BaseEstimator,
-        tag: str,
-        tags_classes: list,
-        index_to_words: Dict[int, str],
+    classifier: BaseEstimator,
+    tag: str,
+    tags_classes: list,
+    index_to_words: Dict[int, str],
 ):
     """
     Print top 5 positive and top 5 negative words for current tag

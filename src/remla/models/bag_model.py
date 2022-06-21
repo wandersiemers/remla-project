@@ -16,7 +16,7 @@ DEFAULT_BAG_MODEL_CONFIG = {
     "min_df": 5,
     "max_df": 0.9,
     "ngram_range": (1, 2),
-    "solver": "liblinear"
+    "solver": "liblinear",
 }
 
 
@@ -31,7 +31,7 @@ def bag_of_words(text: str, words_to_index: Dict[str, int], dict_size: int):
 
 
 def _sparse_bag_of_words(
-        X: list[str], words_to_index: Dict[str, int], dict_size: int
+    X: list[str], words_to_index: Dict[str, int], dict_size: int
 ) -> sp_sparse.bmat:
     return sp_sparse.vstack(
         [
@@ -54,7 +54,7 @@ class BagModel(BaseModel):
             C=self.config["C"],
             dual=False,
             solver=self.config["solver"],
-            verbose=1
+            verbose=1,
         )
         self._classifier = OneVsRestClassifier(clf, verbose=1)
 

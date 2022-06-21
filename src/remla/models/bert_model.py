@@ -101,5 +101,7 @@ class BertBasedModel(BaseModel):
         with torch.no_grad():
             for batch in tqdm.tqdm(loader):
                 outputs = self.model(batch["input_ids"])
-                y_pred.extend((torch.sigmoid(outputs.logits) > 0.15).float().cpu().numpy())
+                y_pred.extend(
+                    (torch.sigmoid(outputs.logits) > 0.15).float().cpu().numpy()
+                )
         return y_pred

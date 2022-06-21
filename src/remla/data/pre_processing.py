@@ -5,9 +5,9 @@ from ast import literal_eval
 import nltk
 import numpy as np
 import pandas as pd
-import wandb
 from nltk.corpus import stopwords
 
+import wandb
 from remla.config import wandb_entity, wandb_project_name
 
 nltk.download("stopwords")

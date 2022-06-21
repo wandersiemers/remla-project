@@ -15,7 +15,7 @@ DEFAULT_TF_IDF_MODEL_CONFIG = {
     "min_df": 5,
     "max_df": 0.9,
     "ngram_range": (1, 2),
-    "solver": "liblinear"
+    "solver": "liblinear",
 }
 
 
@@ -30,7 +30,7 @@ class TfIdfModel(BaseModel[list[str], list[list[str]]]):
             min_df=self.config["min_df"],
             max_df=self.config["max_df"],
             ngram_range=self.config["ngram_range"],
-            token_pattern=r"(\S+)"
+            token_pattern=r"(\S+)",
         )
         # Initialize the classifier
         clf = LogisticRegression(
@@ -38,7 +38,7 @@ class TfIdfModel(BaseModel[list[str], list[list[str]]]):
             C=self.config["C"],
             dual=False,
             solver=self.config["solver"],
-            verbose=1
+            verbose=1,
         )
         self._classifier = OneVsRestClassifier(clf, verbose=1)
 
