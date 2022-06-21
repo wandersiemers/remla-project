@@ -8,22 +8,37 @@ from sklearn.preprocessing import MultiLabelBinarizer
 from remla.models.base_model import BaseModel
 from remla.utils import get_corpus_counts
 
-DEFAULT_TF_IDF_MODEL_CONFIG = {"C": 1, "penalty": "l1", "dict_size": 5000}
+DEFAULT_TF_IDF_MODEL_CONFIG = {
+    "C": 1,
+    "penalty": "l1",
+    "dict_size": 5000,
+    "min_df": 5,
+    "max_df": 0.9,
+    "ngram_range": (1, 2),
+    "solver": "liblinear"
+}
 
 
 class TfIdfModel(BaseModel[list[str], list[list[str]]]):
     def __init__(self, logging: bool, config: Dict[str, Any]):
         BaseModel.__init__(self, logging)
 
-        self._tfidf_vectorizer = TfidfVectorizer(  # nosec
-            min_df=5, max_df=0.9, ngram_range=(1, 2), token_pattern=r"(\S+)"
-        )
+        self.config = DEFAULT_TF_IDF_MODEL_CONFIG.copy()
+        self.config.update(config)
 
+        self._tfidf_vectorizer = TfidfVectorizer(  # nosec
+            min_df=self.config["min_df"],
+            max_df=self.config["max_df"],
+            ngram_range=self.config["ngram_range"],
+            token_pattern=r"(\S+)"
+        )
         # Initialize the classifier
-        penalty: str = config.get("penalty", DEFAULT_TF_IDF_MODEL_CONFIG["penalty"])
-        C: int = config.get("C", DEFAULT_TF_IDF_MODEL_CONFIG["C"])
         clf = LogisticRegression(
-            penalty=penalty, C=C, dual=False, solver="liblinear", verbose=1
+            penalty=self.config["penalty"],
+            C=self.config["C"],
+            dual=False,
+            solver=self.config["solver"],
+            verbose=1
         )
         self._classifier = OneVsRestClassifier(clf, verbose=1)
 

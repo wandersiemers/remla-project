@@ -24,7 +24,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        pip install .
+        pip install -e ".[extra]"
         
     - name: Run tests using pytest
       run: |

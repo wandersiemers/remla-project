@@ -1,16 +1,16 @@
 stages:
   validate:
-    cmd: python src/remla/data/validate_schema.py && touch anomalies_done
+    cmd: python src/remla/data/validate_schema.py
     deps:
-      - assets/data/raw
-      - src/remla/data/validate_schema.py
+    - assets/data/raw
+    - src/remla/data/validate_schema.py
     outs:
-      - anomalies_done
+    - assets/outputs/anomalies.txt
   prepare:
     cmd: python src/remla/data/pre_processing.py
     deps:
-    - anomalies_done
     - assets/data/raw
+    - assets/outputs/anomalies.txt
     - src/remla/data/pre_processing.py
     outs:
     - assets/data/processed
@@ -23,7 +23,7 @@ stages:
       - src/remla/train.py
       - src/remla/models/${item.module}.py
       params:
-        - models
+      - models
       outs:
       - assets/models/${item.class}.joblib
   evaluate:
@@ -35,4 +35,4 @@ stages:
       - src/remla/evaluate.py
       - assets/models/${item.class}.joblib
       params:
-        - models
+      - models

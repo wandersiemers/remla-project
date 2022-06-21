@@ -1,4 +1,4 @@
-from typing import Any, Dict, T_co
+from typing import Any, Dict
 
 import torch
 import tqdm
@@ -28,7 +28,7 @@ class StackOverflowDataset(Dataset):
         )
         self.labels = torch.Tensor(y_train)
 
-    def __getitem__(self, index) -> T_co:
+    def __getitem__(self, index) -> Any:
         item = {key: val[index] for key, val in self.encodings.items()}
         item["labels"] = self.labels[index]
         return item
@@ -90,14 +90,16 @@ class BertBasedModel(BaseModel):
         trainer.train()
 
     def predict(self, X_test: list[str]):
+        self.model.eval()
         y_pred = []
         dataset = StackOverflowDataset(
             X_train=X_test, y_train=[0 for _ in X_test], tokenizer=self.tokenizer
         )
         dataset.to_device(self.device)
 
-        loader = DataLoader(dataset, batch_size=64, shuffle=True)
-        for batch in tqdm.tqdm(loader):
-            outputs = self.model(batch["input_ids"])
-            y_pred.extend((outputs.logits > 0).float().cpu().numpy())
+        loader = DataLoader(dataset, batch_size=64)
+        with torch.no_grad():
+            for batch in tqdm.tqdm(loader):
+                outputs = self.model(batch["input_ids"])
+                y_pred.extend((torch.sigmoid(outputs.logits) > 0.15).float().cpu().numpy())
         return y_pred

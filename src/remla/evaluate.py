@@ -2,26 +2,19 @@ import argparse
 from typing import Dict, Type
 
 import numpy as np
+import wandb
 from joblib import load
 from sklearn.base import BaseEstimator
 from sklearn.metrics import accuracy_score, average_precision_score, f1_score
 
-import wandb
 from remla.config import wandb_entity, wandb_project_name
 from remla.data.pre_processing import read_files
 from remla.models.base_model import BaseModel
 
 
 def log_evaluation_scores(
-    y_val: np.ndarray, predicted: np.ndarray, classifier_name: str
+        y_val: np.ndarray, predicted: np.ndarray, classifier_name: str
 ):
-    wandb.init(
-        project=wandb_project_name,
-        entity=wandb_entity,
-        tags=["evaluation"],
-        config={"model": classifier_name},
-    )
-
     accuracy = accuracy_score(y_val, predicted)
     f1 = f1_score(y_val, predicted, average="weighted")
     average_precision = average_precision_score(y_val, predicted, average="macro")
@@ -41,10 +34,10 @@ def log_evaluation_scores(
 
 
 def print_words_for_tag(
-    classifier: BaseEstimator,
-    tag: str,
-    tags_classes: list,
-    index_to_words: Dict[int, str],
+        classifier: BaseEstimator,
+        tag: str,
+        tags_classes: list,
+        index_to_words: Dict[int, str],
 ):
     """
     Print top 5 positive and top 5 negative words for current tag
@@ -82,7 +75,7 @@ def print_words_for_tag(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Evaluate a trained machine learning model on processed data from the data pipeline"
+        description="Evaluate a trained machine learning model on processed data from the data pipeline"  # noqa
     )
     parser.add_argument(
         "-jfp",
@@ -96,9 +89,19 @@ def main():
 
     _, _, X_val, y_val, _ = read_files("processed")
 
+    X_val, y_val = X_val[:5000], y_val[:5000]
+
     classifier: Type[BaseModel] = load(joblib_file_path)
 
     classifier_name: str = classifier.__class__.__name__
+
+    wandb.init(
+        project=wandb_project_name,
+        entity=wandb_entity,
+        tags=["evaluation"],
+        config={"model_name": classifier_name},
+    )
+    wandb.config.update(classifier.config if classifier.config else {})
 
     log_evaluation_scores(
         classifier.get_labels(y_val), classifier.predict(X_val), classifier_name
