@@ -1,0 +1,72 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: remla
+  namespace: remla
+spec:
+  provider: nginx
+  # deployment reference
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: remla-deployment
+  # ingress reference
+  ingressRef:
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    name: remla-ingress
+  # hpa reference
+  autoscalerRef:
+    apiVersion: autoscaling/v2beta2
+    kind: HorizontalPodAutoscaler
+    name: remla-hpa
+  # the maximum time in seconds for the canary deployment
+  # to make progress before it is rollback (default 600s)
+  progressDeadlineSeconds: 60
+  service:
+    name: remla
+    # ClusterIP port number
+    port: 5000
+    # container port number or name
+    targetPort: 5000
+  analysis:
+    # schedule interval (default 60s)
+    interval: 10s
+    # max number of failed metric checks before rollback
+    threshold: 10
+    # max traffic percentage routed to canary
+    # percentage (0-100)
+    maxWeight: 60
+    # canary increment step
+    # percentage (0-100)
+    stepWeight: 10
+    metrics: # adding this metric fails 
+      - name: flask_http_request_total
+        thresholdRange:
+          min: 0
+        interval: 1m
+    # - name: error-rate
+    #   templateRef:
+    #     name: not-found-percentage
+    #     namespace: remla
+    #   thresholdRange:
+    #     max: 5
+    #   interval: 1m
+    # - name: latency
+    #   templateRef:
+    #     name: latency
+    #     namespace: remla
+    #   thresholdRange:
+    #     max: 100
+    #   interval: 1m
+    webhooks:
+    # load text execution during the analysis
+    - name: load-test
+      url: http://flagger-loadtester.remla/
+      timeout: 5s
+      metadata:
+        cmd: "hey -z 1m -q 10 -c 2 http://remla-canary.remla:5000/"
+    # manual approval of traffic increase
+    - name: "traffic increase"
+      type: confirm-traffic-increase
+      url: http://flagger-loadtester.remla/gate/check
